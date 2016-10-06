@@ -1,0 +1,11 @@
+Rdc\Cart\CartBusinessBundle\Entity\Item:
+    properties:
+        item_id:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        quantity:
+            - NotBlank: ~
+            - Type:
+                type: integer
+

@@ -1,0 +1,120 @@
+Rdc\Cart\CartBusinessBundle\Entity\Cart:
+    properties:
+        channel:
+            - NotBlank: ~
+        shopId:
+            - NotBlank: ~
+        status:
+            - NotBlank: ~
+
+#Rdc\Cart\CartBusinessBundle\Entity\Promotion:
+#    properties:
+#        test:
+#            - NotBlank: ~
+
+#Rdc\Cart\CartBusinessBundle\Entity\Promotion:
+#    properties:
+#        rule:
+#            - All:
+#                - Type:
+#                    type: Rdc\Cart\CartBusinessBundle\Entity\PromotionRule
+#            # addresses is array of entities, so use "traverse" option to validate each entity in that array
+#            - Valid: { traverse: true }
+##            - Valid: ~
+#        data:
+#            - Collection:
+#                fields:
+#                    id:
+#                        - NotBlank: ~
+#                    code:
+#                        - NotBlank: ~
+#                    from_date:
+#                        - NotBlank: ~
+#                    to_date:
+#                        - NotBlank: ~
+#                    enable:
+#                        - NotBlank: ~
+#                    max_number_uses:
+#                        - NotBlank: ~
+#                    max_use_per_customer:
+#                        - NotBlank: ~
+#                    domaine_source:
+#                        - NotBlank: ~
+#                    financial_source:
+#                        - NotBlank: ~
+#                    user_link:
+#                        - NotBlank: ~
+#                    action_id:
+#                        - NotBlank: ~
+#                    rule_id:
+#                        - NotBlank: ~
+#                    pattern_id:
+#                        - NotBlank: ~
+#                    creation_date:
+#                        - NotBlank: ~
+#                    creation_user_id:
+#                        - NotBlank: ~
+#                    modification_date:
+#                        - NotBlank: ~
+#                    modification_user_id:
+#                        - NotBlank: ~
+#        action:
+#            - All:
+#                - Type:
+#                    type: Rdc\Cart\CartBusinessBundle\Entity\PromotionAction
+#            # addresses is array of entities, so use "traverse" option to validate each entity in that array
+#            - Valid: { traverse: true }
+##            - Valid: ~
+#
+#Rdc\Cart\CartBusinessBundle\Entity\PromotionAction:
+#    properties:
+#        action:
+#            - Collection:
+#                fields:
+#                    id:
+#                        - NotBlank: ~
+#                    name:
+#                        - NotBlank: ~
+#                    discount_type:
+#                        - NotBlank: ~
+#                    discount_value:
+#                        - NotBlank: ~
+#                    apply_on:
+#                        - NotBlank: ~
+#                    creation_user_id:
+#                        - NotBlank: ~
+#                    modification_user_id:
+#                        - NotBlank: ~
+#                    ts_insert:
+#                        - NotBlank: ~
+#                    ts_last_change:
+#                        - NotBlank: ~
+#                    target_id:
+#                        - NotBlank: ~
+#                    target_type:
+#                        - NotBlank: ~
+#                    target_mode:
+#                        - NotBlank: ~
+#                    action_id:
+#                        - NotBlank: ~
+#
+#Rdc\Cart\CartBusinessBundle\Entity\PromotionRule:
+#    properties:
+#        action:
+#            - Collection:
+#                fields:
+#                    site_id:
+#                        - NotBlank: ~
+#                    threshold_amount:
+#                        - NotBlank: ~
+#                    creation_user_id:
+#                        - NotBlank: ~
+#                    modification_user_id:
+#                        - NotBlank: ~
+#                    ts_insert:
+#                        - NotBlank: ~
+#                    ts_last_change:
+#                        - NotBlank: ~
+#                    store_mode:
+#                        - NotBlank: ~
+            

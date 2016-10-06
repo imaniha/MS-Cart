@@ -1,0 +1,58 @@
+Rdc\Cart\CartBusinessBundle\Entity\Address:
+    properties:
+        address_id:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        firstname:
+            - NotBlank: ~
+            - Type:
+                type: string
+        lastname:
+            - NotBlank: ~
+            - Type:
+                type: string
+        address1:
+            - NotBlank: ~
+            - Type:
+                type: string
+        address2:
+            - Type:
+                type: string
+        city:
+            - NotBlank: ~
+            - Type:
+                type: string
+        zip:
+            - NotBlank: ~
+            - Type:
+                type: string
+        country_code:
+            - NotBlank: ~
+            - Type:
+                type: string
+            - Length:
+                min: 2
+                max: 2
+        country_label:
+            - NotBlank: ~
+            - Type:
+                type: string
+        phone:
+            - Type:
+                type: string
+        mobile_phone:
+            - Type:
+                type: string
+        work_phone:
+            - Type:
+                type: string
+        fax:
+            - Type:
+                type: string
+        rcs:
+            - Type:
+                type: string
+        access_code:
+            - Type:
+                type: string

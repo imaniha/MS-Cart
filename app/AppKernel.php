@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Rdc\Cart\CartApiBundle\CartApiBundle(),
+            new Rdc\Cart\CartBusinessBundle\CartBusinessBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
