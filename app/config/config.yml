@@ -76,6 +76,11 @@ fos_rest:
     param_fetcher_listener: true
     routing_loader:
         default_format: json
+    format_listener:
+        enabled: true
+        rules:
+            # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
+            - { path: '^/', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
 
 jms_serializer:
     metadata:
