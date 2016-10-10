@@ -388,7 +388,7 @@ class CartApiController extends FOSRestController
     }
 
     /**
-     * Add address to Cart
+     * Add payment to Cart
      *
      * **Request Format**
      *<pre>
