@@ -15,7 +15,8 @@ class CartType extends AbstractType
         $builder
             ->add('shop_id', IntegerType::class)
             ->add('channel', TextType::class)
-            ->add('status', TextType::class);
+            ->add('status', TextType::class)
+            ->add('additional_data', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

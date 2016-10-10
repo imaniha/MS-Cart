@@ -77,11 +77,7 @@ class CartApiController extends FOSRestController
         $cartRepository = $this->getRepository('CartBusinessBundle:Cart');
         $cart = $cartRepository->createEntity();
         $form = $this->createForm(CartType::class, $cart);
-
         $form->handleRequest($request);
-
-        $extra = $form->getExtraData();
-        $cart->setAdditionalData($extra);
 
         try {
             $this->validateForm($form);
@@ -247,36 +243,6 @@ class CartApiController extends FOSRestController
             $data = ['success' => false, 'message' => $exception->getMessage()];
             $view = $this->view($data, 400);
         }
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * Delete item in Cart
-     *
-     * @Delete("cart/{cart_id}/item/{item_id}",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"}, name="delete_item_in_cart")
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Delete Cart item",
-     *  section="Item",
-     *  statusCodes={
-     *      204="Returned when successful",
-     *      400="Returned when the url is malformed",
-     *      500="Returned when a technical error occurs, request must be retry"
-     *  }
-     * )
-     *
-     * @return array
-     */
-    public function deleteItemAction(Request $request)
-    {
-        $cartId = $request->get('cart_id');
-        $itemId = $request->get('item_id');
-
-        $this->getCartBusiness()->deletetem($cartId, $itemId);
-
-        $view = View::create('', 204);
 
         return $this->handleView($view);
     }
