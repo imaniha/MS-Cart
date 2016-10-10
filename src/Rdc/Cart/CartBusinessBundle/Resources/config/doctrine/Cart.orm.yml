@@ -1,0 +1,47 @@
+Rdc\Cart\CartBusinessBundle\Entity\Cart:
+    type: entity
+    table: null
+    repositoryClass: Rdc\Cart\CartBusinessBundle\Repository\CartRepository
+    id:
+        cart_id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        shopId:
+            type: integer
+            column: shop_id
+        channel:
+            type: string
+            length: 255
+        status:
+            type: string
+            length: 255
+        notified:
+            type: boolean
+            nullable: true
+            options:
+                default: 0
+        items:
+            type: json_array
+            nullable: true
+        customer:
+            type: json_array
+            nullable: true
+        address:
+            type: json_array
+            nullable: true
+        payment:
+            type: json_array
+            nullable: true
+        shipping:
+            type: json_array
+            nullable: true
+        promotion:
+            type: json_array
+            nullable: true
+        additionalData:
+            type: json_array
+            nullable: true
+    lifecycleCallbacks: {  }

@@ -1,0 +1,10 @@
+services:
+    cart.business:
+        class: Rdc\Cart\CartBusinessBundle\Service\CartBusiness
+        arguments: ['@doctrine.orm.entity_manager', '@serializer', '@address.business', '@customer.business']
+
+    customer.business:
+        class: Rdc\Cart\CartBusinessBundle\Service\CustomerBusiness
+
+    address.business:
+        class: Rdc\Cart\CartBusinessBundle\Service\AddressBusiness

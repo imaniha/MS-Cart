@@ -1,0 +1,35 @@
+Rdc\Cart\CartBusinessBundle\Entity\Cart:
+    exclusion_policy: ALL
+    exclude: false
+    properties:
+        cart_id:
+            expose: true
+            type: integer
+            groups: ["details"]
+        channel:
+            expose: true
+            groups: ["nelmio"]
+        shopId:
+            exclude: true
+            expose: true
+            type: integer
+            groups: ["nelmio"]
+            serialized_name: shop_id
+        status:
+            expose: true
+            type: string
+            groups: ["nelmio"]
+        items:
+            expose: true
+        promotion:
+            expose: true
+        address:
+            expose: true
+        customer:
+            expose: true
+        payment:
+            expose: true
+        additionalData:
+            expose: true
+        notified:
+            expose: false

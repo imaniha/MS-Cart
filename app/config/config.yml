@@ -2,11 +2,13 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@CartBusinessBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    jms_serializer.form_error_handler.class: Rdc\Cart\CartApiBundle\Handler\FormErrorHandler
 
 framework:
     #esi:             ~
@@ -66,3 +68,22 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+nelmio_api_doc: ~
+
+fos_rest:
+    param_fetcher_listener: true
+    routing_loader:
+        default_format: json
+    format_listener:
+        enabled: true
+        rules:
+            # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
+            - { path: '^/', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
+
+jms_serializer:
+    metadata:
+        directories:
+            cart:
+                namespace_prefix: "CartBusinessBundle"
+                path: "@CartBusinessBundle/Resources/config/serializer"

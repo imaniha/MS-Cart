@@ -1,0 +1,23 @@
+Rdc\Cart\CartBusinessBundle\Entity\Cart:
+    getters:
+        address:
+            - Valid: ~
+        customer:
+            - Valid: ~
+        shipping:
+            - Valid: ~
+        payment:
+            - Valid: ~
+    properties:
+        channel:
+            - NotBlank: ~
+            - Type:
+                type: string
+        shopId:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        status:
+            - NotBlank: ~
+            - Type:
+                type: string

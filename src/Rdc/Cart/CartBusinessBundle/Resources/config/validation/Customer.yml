@@ -1,0 +1,19 @@
+Rdc\Cart\CartBusinessBundle\Entity\Customer:
+    properties:
+        customer_id:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        firstname:
+            - NotBlank: ~
+            - Type:
+                type: string
+        lastname:
+            - NotBlank: ~
+            - Type:
+                type: string
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Type:
+                type: string
