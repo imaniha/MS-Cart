@@ -12,9 +12,5 @@ use Rdc\Cart\CartBusinessBundle\Repository\BusinessRepository;
  */
 class CartRepository extends BusinessRepository
 {
-    public function getOrders()
-    {
-        return $this->findBy(['status'=>2, 'notified'=>false]);
-    }
 
 }

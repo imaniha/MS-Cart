@@ -14,8 +14,12 @@ class CartBusiness
     protected $addressBusiness;
     protected $customerBusiness;
 
-    public function __construct(EntityManager $entityManager, Serializer $serializer, AddressBusiness $addressBusiness, CustomerBusiness $customerBusiness)
-    {
+    public function __construct(
+        EntityManager $entityManager,
+        Serializer $serializer,
+        AddressBusiness $addressBusiness,
+        CustomerBusiness $customerBusiness
+    ) {
         $this->em = $entityManager;
         $this->serializer = $serializer;
         $this->addressBusiness = $addressBusiness;
@@ -33,7 +37,7 @@ class CartBusiness
     public function notify($cart)
     {
 
-        if ( '2' !== $cart->getStatus() ) {
+        if ('2' !== $cart->getStatus()) {
             throw new \LogicException('Cart should be locked to be notified');
         }
 
@@ -46,7 +50,7 @@ class CartBusiness
 
     public function getCart($cartId = null)
     {
-        $cart = $this->em->getRepository('CartBusinessBundle:Cart')->findOneBy(['cart_id'=>$cartId]);
+        $cart = $this->em->getRepository('CartBusinessBundle:Cart')->findOneBy(['cart_id' => $cartId]);
 
         if (!$cart instanceof Cart) {
             throw new NotFoundHttpException('Cart not found');
@@ -55,9 +59,15 @@ class CartBusiness
         return $cart;
     }
 
-    public function addItem($cartId,$item, $extra)
+    public function getUnnotifiedOrders()
     {
-        $cart = $this->getCart( $cartId );
+
+        return $this->em->getRepository('CartBusinessBundle:Cart')->findBy(['status'=>2, 'notified'=>false]);
+    }
+
+    public function addItem($cartId, $item, $extra)
+    {
+        $cart = $this->getCart($cartId);
         $item = $this->serializer->toArray($item);
         $items = $cart->getItems();
         $items[$item['item_id']] = array_merge($item, $extra);
@@ -70,12 +80,12 @@ class CartBusiness
     }
 
 
-    public function deleteItem($cartId,$item_id)
+    public function deleteItem($cartId, $item_id)
     {
-        $cart = $this->getCart( $cartId );
+        $cart = $this->getCart($cartId);
         $items = $cart->getItems();
-        if(isset( $items[$item_id])){
-            unset( $items[$item_id]);
+        if (isset($items[$item_id])) {
+            unset($items[$item_id]);
             $cart->setItems($items);
             $this->em->persist($cart);
             $this->em->flush();
@@ -91,7 +101,7 @@ class CartBusiness
 
     public function addPromotion($cartId, $promotion)
     {
-        $cart = $this->getCart( $cartId );
+        $cart = $this->getCart($cartId);
         $cart->setPromotion($promotion);
 
         $this->em->persist($cart);
@@ -109,14 +119,17 @@ class CartBusiness
     {
         // TODO implement method
     }
+
     public function closeCart($cartId)
     {
         // TODO implement method
     }
+
     public function resetCart($cartId)
     {
         // TODO implement method
     }
+
     public function mergeCart($cartId)
     {
         // TODO implement method

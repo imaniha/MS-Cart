@@ -611,10 +611,10 @@ class CartApiController extends FOSRestController
      *
      * @return array
      */
-    public function getOrderListAction(Request $request)
+    public function getUnnotifiedOrderListAction(Request $request)
     {
         try {
-            $orders = $this->getRepository('CartBusinessBundle:Cart')->getOrders();
+            $orders = $this->getCartBusiness()->getUnnotifiedOrders();
             $view = $this->view($orders, 200);
 
         } catch (\Exception $exception) {
