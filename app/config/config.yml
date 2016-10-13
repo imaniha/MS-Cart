@@ -85,5 +85,5 @@ jms_serializer:
     metadata:
         directories:
             cart:
-                namespace_prefix: "CartBusinessBundle"
-                path: "@CartBusinessBundle/Resources/config/serializer"
+                namespace_prefix: "Rdc\\Cart\\CartBusinessBundle"
+                path: "@CartApiBundle/Resources/config/serializer"

@@ -26,10 +26,16 @@ use FOS\RestBundle\Controller\Annotations\Version;
 use Rdc\Cart\CartApiBundle\Exception\FormValidationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * Class CartApiController
+ *
+ */
+
 class CartApiController extends FOSRestController
 {
     /**
      * Create new Cart
+     *
      *
      * **Request Format**
      *<pre>
@@ -52,11 +58,15 @@ class CartApiController extends FOSRestController
      *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
      *       "groups"={"nelmio"},
      *       "parsers"={
-     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
-     *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
      *     },
-     *
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  resource=true,
      *  description="Create new Cart",
      *  section="Cart",
@@ -103,6 +113,12 @@ class CartApiController extends FOSRestController
      * @ApiDoc(
      *  resource=true,
      *  description="Return Cart content",
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  section="Cart",
      *  statusCodes={
      *      200="Returned when successful",
@@ -151,6 +167,12 @@ class CartApiController extends FOSRestController
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *       }
+     *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
      *     },
      *  description="Add customer to Cart",
@@ -216,6 +238,12 @@ class CartApiController extends FOSRestController
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
      *       }
      *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  description="Add an item to Cart",
      *  section="Item",
      *  statusCodes={
@@ -254,6 +282,12 @@ class CartApiController extends FOSRestController
      * @ParamConverter("cart", class="CartBusinessBundle:Cart")
      * @ApiDoc(
      *  resource=true,
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  description="Return Cart summary content",
      *  section="Cart",
      *  statusCodes={
@@ -314,6 +348,12 @@ class CartApiController extends FOSRestController
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *       }
+     *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
      *     },
      *  section="Address",
@@ -385,6 +425,12 @@ class CartApiController extends FOSRestController
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
      *       }
      *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  section="Payment",
      *  statusCodes={
      *      200="Returned when successful",
@@ -447,6 +493,12 @@ class CartApiController extends FOSRestController
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *       }
+     *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
      *     },
      *  section="Shipping",
@@ -547,6 +599,12 @@ class CartApiController extends FOSRestController
      *
      * @ApiDoc(
      *  resource=true,
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
      *  description="Add promotion to cart",
      *  section="Cart Promotion",
      *  statusCodes={
