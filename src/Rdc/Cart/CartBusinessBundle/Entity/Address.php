@@ -11,7 +11,7 @@ class Address
     /**
      * @var int
      */
-    private $address_id;
+    private $addressId;
 
     /**
      * @var string
@@ -46,12 +46,12 @@ class Address
     /**
      * @var string
      */
-    private $country_code;
+    private $countryCode;
 
     /**
      * @var string
      */
-    private $country_label;
+    private $countryLabel;
 
     /**
      * @var string
@@ -61,12 +61,12 @@ class Address
     /**
      * @var string
      */
-    private $mobile_phone;
+    private $mobilePhone;
 
     /**
      * @var string
      */
-    private $work_phone;
+    private $workPhone;
 
     /**
      * @var string
@@ -81,12 +81,12 @@ class Address
     /**
      * @var string
      */
-    private $access_code;
+    private $accessCode;
 
     /**
      * @var array
      */
-    private $additional_data;
+    private $additionalData;
 
     public function __construct($data)
     {
@@ -113,22 +113,22 @@ class Address
 
         $data = array_merge($default, $data);
 
-        $this->address_id = $data['address_id'];
+        $this->addressId = $data['address_id'];
         $this->firstname = $data['firstname'];
         $this->lastname = $data['lastname'];
         $this->address1 = $data['address1'];
         $this->address2 = $data['address2'];
         $this->city = $data['city'];
         $this->zip = $data['zip'];
-        $this->country_code = $data['country_code'];
-        $this->country_label = $data['country_label'];
+        $this->countryCode = $data['country_code'];
+        $this->countryLabel = $data['country_label'];
         $this->phone = $data['phone'];
-        $this->mobile_phone = $data['mobile_phone'];
-        $this->work_phone = $data['work_phone'];
+        $this->mobilePhone = $data['mobile_phone'];
+        $this->workPhone = $data['work_phone'];
         $this->fax = $data['fax'];
         $this->rcs = $data['rcs'];
-        $this->access_code = $data['access_code'];
-        $this->additional_data = $data['additional_data'];
+        $this->accessCode = $data['access_code'];
+        $this->additionalData = $data['additional_data'];
 
     }
 
@@ -136,22 +136,22 @@ class Address
     {
 
         return array(
-            'address_id' => $this->address_id,
+            'address_id' => $this->addressId,
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
             'address1' => $this->address1,
             'address2' => $this->address2,
             'city' => $this->city,
             'zip' => $this->zip,
-            'country_code' => $this->country_code,
-            'country_label' => $this->country_label,
+            'country_code' => $this->countryCode,
+            'country_label' => $this->countryLabel,
             'phone' => $this->phone,
-            'mobile_phone' => $this->mobile_phone,
-            'work_phone' => $this->work_phone,
+            'mobile_phone' => $this->mobilePhone,
+            'work_phone' => $this->workPhone,
             'fax' => $this->fax,
             'rcs' => $this->rcs,
-            'access_code' => $this->access_code,
-            'additional_data' => $this->additional_data,
+            'access_code' => $this->accessCode,
+            'additional_data' => $this->additionalData,
         );
     }
 
@@ -160,7 +160,7 @@ class Address
      */
     public function getAddressId()
     {
-        return $this->address_id;
+        return $this->addressId;
     }
 
     /**
@@ -216,7 +216,7 @@ class Address
      */
     public function getCountryCode()
     {
-        return $this->country_code;
+        return $this->countryCode;
     }
 
     /**
@@ -224,7 +224,7 @@ class Address
      */
     public function getCountryLabel()
     {
-        return $this->country_label;
+        return $this->countryLabel;
     }
 
     /**
@@ -240,7 +240,7 @@ class Address
      */
     public function getMobilePhone()
     {
-        return $this->mobile_phone;
+        return $this->mobilePhone;
     }
 
     /**
@@ -248,7 +248,7 @@ class Address
      */
     public function getWorkPhone()
     {
-        return $this->work_phone;
+        return $this->workPhone;
     }
 
     /**
@@ -272,7 +272,7 @@ class Address
      */
     public function getAccessCode()
     {
-        return $this->access_code;
+        return $this->accessCode;
     }
 
     /**
@@ -280,16 +280,16 @@ class Address
      */
     public function getAdditionalData()
     {
-        return $this->additional_data;
+        return $this->additionalData;
     }
 
 
     /**
      * @param int $address_id
      */
-    public function setAddressId($address_id)
+    public function setAddressId($addressId)
     {
-        $this->address_id = $address_id;
+        $this->addressId = $addressId;
     }
 
     /**
@@ -341,19 +341,19 @@ class Address
     }
 
     /**
-     * @param string $country_code
+     * @param string $countryCode
      */
-    public function setCountryCode($country_code)
+    public function setCountryCode($countryCode)
     {
-        $this->country_code = $country_code;
+        $this->countryCode = $countryCode;
     }
 
     /**
-     * @param string $country_label
+     * @param string $countryLabel
      */
-    public function setCountryLabel($country_label)
+    public function setCountryLabel($countryLabel)
     {
-        $this->country_label = $country_label;
+        $this->countryLabel = $countryLabel;
     }
 
     /**
@@ -365,19 +365,19 @@ class Address
     }
 
     /**
-     * @param string $mobile_phone
+     * @param string $mobilePhone
      */
-    public function setMobilePhone($mobile_phone)
+    public function setMobilePhone($mobilePhone)
     {
-        $this->mobile_phone = $mobile_phone;
+        $this->mobilePhone = $mobilePhone;
     }
 
     /**
-     * @param string $work_phone
+     * @param string $workPhone
      */
-    public function setWorkPhone($work_phone)
+    public function setWorkPhone($workPhone)
     {
-        $this->work_phone = $work_phone;
+        $this->workPhone = $workPhone;
     }
 
     /**
@@ -397,19 +397,19 @@ class Address
     }
 
     /**
-     * @param string $access_code
+     * @param string $accessCode
      */
-    public function setAccessCode($access_code)
+    public function setAccessCode($accessCode)
     {
-        $this->access_code = $access_code;
+        $this->accessCode = $accessCode;
     }
 
     /**
-     * @param array $additional_data
+     * @param array $additionalData
      */
-    public function setAdditionalData($additional_data)
+    public function setAdditionalData($additionalData)
     {
-        $this->additional_data = $additional_data;
+        $this->additionalData = $additionalData;
     }
 
 

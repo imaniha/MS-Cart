@@ -11,7 +11,7 @@ class Item
     /**
      * @var int
      */
-    private $item_id;
+    private $itemId;
 
     /**
      * @var integer
@@ -21,7 +21,7 @@ class Item
     /**
      * @var array
      */
-    private $additional_data;
+    private $additionalData;
     /**
      * @return int
      */
@@ -36,33 +36,32 @@ class Item
 
         $data = array_merge($default, $data);
 
-        $this->item_id =  $data['item_id'];
+        $this->itemId =  $data['item_id'];
         $this->quantity =  $data['quantity'];
-        $this->additional_data =  $data['additional_data'];
+        $this->additionalData =  $data['additional_data'];
 
     }
 
     public function toArray()
     {
         return array(
-            'item_id' => $this->item_id,
+            'item_id' => $this->itemId,
             'quantity' => $this->quantity,
-            'additional_data' => $this->additional_data
+            'additional_data' => $this->additionalData
         );
-
     }
 
     public function getItemId()
     {
-        return $this->item_id;
+        return $this->itemId;
     }
 
     /**
-     * @param int $item_id
+     * @param int $itemId
      */
-    public function setItemId($item_id)
+    public function setItemId($itemId)
     {
-        $this->item_id = $item_id;
+        $this->itemId = $itemId;
     }
 
     /**
@@ -86,15 +85,15 @@ class Item
      */
     public function getAdditionalData()
     {
-        return $this->additional_data;
+        return $this->additionalData;
     }
 
     /**
      * @param array $additional_data
      */
-    public function setAdditionalData($additional_data)
+    public function setAdditionalData($additionalData)
     {
-        $this->additional_data = $additional_data;
+        $this->additionalData = $additionalData;
     }
 
 

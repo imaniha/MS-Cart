@@ -1,10 +1,10 @@
 Rdc\Cart\CartBusinessBundle\Entity\Shipping:
     properties:
-        type_id:
+        typeId:
             - NotBlank: ~
             - Type:
                 type: integer
-        type_name:
+        typeName:
             - NotBlank: ~
             - Type:
                 type: string

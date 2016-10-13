@@ -1,6 +1,6 @@
 Rdc\Cart\CartBusinessBundle\Entity\Item:
     properties:
-        item_id:
+        itemId:
             - NotBlank: ~
             - Type:
                 type: integer

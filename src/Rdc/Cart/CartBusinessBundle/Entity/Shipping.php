@@ -11,17 +11,17 @@ class Shipping
     /**
      * @var int
      */
-    private $type_id;
+    private $typeId;
 
     /**
      * @var string
      */
-    private $type_name;
+    private $typeName;
 
     /**
      * @var array
      */
-    private $additional_data;
+    private $additionalData;
 
     public function __construct($data = array())
     {
@@ -33,9 +33,9 @@ class Shipping
 
         $data = array_merge($default, $data);
 
-        $this->type_id =  $data['type_id'];
-        $this->type_name =  $data['type_name'];
-        $this->additional_data =  $data['additional_data'];
+        $this->typeId =  $data['type_id'];
+        $this->typeName =  $data['type_name'];
+        $this->additionalData =  $data['additional_data'];
 
     }
 
@@ -43,9 +43,9 @@ class Shipping
     {
 
         return array(
-            'type_id' => $this->type_id,
-            'type_name' => $this->type_name,
-            'additional_data' => $this->additional_data
+            'type_id' => $this->typeId,
+            'type_name' => $this->typeName,
+            'additional_data' => $this->additionalData
         );
 
     }
@@ -55,15 +55,15 @@ class Shipping
      */
     public function getTypeId()
     {
-        return $this->type_id;
+        return $this->typeId;
     }
 
     /**
-     * @param int $type_id
+     * @param int $typeId
      */
-    public function setTypeId($type_id)
+    public function setTypeId($typeId)
     {
-        $this->type_id = $type_id;
+        $this->typeId = $typeId;
     }
 
     /**
@@ -71,15 +71,15 @@ class Shipping
      */
     public function getTypeName()
     {
-        return $this->type_name;
+        return $this->typeName;
     }
 
     /**
-     * @param string $type_name
+     * @param string $typeName
      */
-    public function setTypeName($type_name)
+    public function setTypeName($typeName)
     {
-        $this->type_name = $type_name;
+        $this->typeName = $typeName;
     }
 
     /**
@@ -87,15 +87,15 @@ class Shipping
      */
     public function getAdditionalData()
     {
-        return $this->additional_data;
+        return $this->additionalData;
     }
 
     /**
-     * @param array $additional_data
+     * @param array $additionalData
      */
-    public function setAdditionalData($additional_data)
+    public function setAdditionalData($additionalData)
     {
-        $this->additional_data = $additional_data;
+        $this->additionalData = $additionalData;
     }
 
 

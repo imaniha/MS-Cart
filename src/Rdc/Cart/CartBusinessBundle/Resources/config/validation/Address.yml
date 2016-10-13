@@ -1,6 +1,6 @@
 Rdc\Cart\CartBusinessBundle\Entity\Address:
     properties:
-        address_id:
+        addressId:
             - NotBlank: ~
             - Type:
                 type: integer
@@ -27,24 +27,24 @@ Rdc\Cart\CartBusinessBundle\Entity\Address:
             - NotBlank: ~
             - Type:
                 type: string
-        country_code:
+        countryCode:
             - NotBlank: ~
             - Type:
                 type: string
             - Length:
                 min: 2
                 max: 2
-        country_label:
+        countryLabel:
             - NotBlank: ~
             - Type:
                 type: string
         phone:
             - Type:
                 type: string
-        mobile_phone:
+        mobilePhone:
             - Type:
                 type: string
-        work_phone:
+        workPhone:
             - Type:
                 type: string
         fax:
@@ -53,6 +53,6 @@ Rdc\Cart\CartBusinessBundle\Entity\Address:
         rcs:
             - Type:
                 type: string
-        access_code:
+        accessCode:
             - Type:
                 type: string

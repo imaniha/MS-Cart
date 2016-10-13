@@ -120,16 +120,6 @@ class Cart
     }
 
     /**
-     * Get item_id
-     *
-     * @return integer
-     */
-    public function getItemId()
-    {
-        return $this->item_id;
-    }
-
-    /**
      * Set shopId
      *
      * @param integer $shopId
@@ -142,6 +132,7 @@ class Cart
         return $this;
     }
 
+    /**
     /**
      * Get shopId
      *
