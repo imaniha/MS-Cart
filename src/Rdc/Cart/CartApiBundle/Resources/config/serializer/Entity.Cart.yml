@@ -20,7 +20,7 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             type: string
             groups: ["nelmio"]
         items:
-            expose: false
+            expose: true
         promotion:
             expose: true
         address:

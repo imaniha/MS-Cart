@@ -8,6 +8,8 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - Valid: ~
         payment:
             - Valid: ~
+        items:
+            - Valid: { traverse: true }
     properties:
         channel:
             - NotBlank: ~
