@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Entity\Address:
+Rdc\Cart\CartBusinessBundle\Vo\Address:
     properties:
         addressId:
             - NotBlank: ~

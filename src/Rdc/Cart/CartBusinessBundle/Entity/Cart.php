@@ -5,7 +5,7 @@ namespace Rdc\Cart\CartBusinessBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 
-use Rdc\Cart\CartBusinessBundle\Entity\Address;
+use Rdc\Cart\CartBusinessBundle\Vo\Address;
 use Rdc\Cart\CartBusinessBundle\Entity\Customer;
 use Rdc\Cart\CartBusinessBundle\Entity\Payment;
 use Rdc\Cart\CartBusinessBundle\Entity\Shipping;
@@ -298,7 +298,7 @@ class Cart
     }
 
     /**
-     * @return \Rdc\Cart\CartBusinessBundle\Entity\Address
+     * @return \Rdc\Cart\CartBusinessBundle\Vo\Address
      */
     public function getAddress()
     {
@@ -307,7 +307,7 @@ class Cart
     }
 
     /**
-     * @param \Rdc\Cart\CartBusinessBundle\Entity\Address $address
+     * @param \Rdc\Cart\CartBusinessBundle\Vo\Address $address
      */
     public function setAddress($address)
     {

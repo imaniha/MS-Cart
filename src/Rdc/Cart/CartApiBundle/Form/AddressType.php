@@ -35,7 +35,7 @@ class AddressType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Address',
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Address',
                 'csrf_protection' => false,
             ]
         );

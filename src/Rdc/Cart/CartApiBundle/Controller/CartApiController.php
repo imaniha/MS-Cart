@@ -11,7 +11,7 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\View\View;
 use Symfony\Component\Form\Form;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
-use Rdc\Cart\CartBusinessBundle\Entity\Address;
+use Rdc\Cart\CartBusinessBundle\Vo\Address;
 use Rdc\Cart\CartBusinessBundle\Entity\Item;
 use Rdc\Cart\CartBusinessBundle\Entity\Customer;
 use Rdc\Cart\CartApiBundle\Form\CartType;
