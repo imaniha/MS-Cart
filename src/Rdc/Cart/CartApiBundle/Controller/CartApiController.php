@@ -12,6 +12,7 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\Form\Form;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
+<<<<<<< Upstream, based on develop
 use Rdc\Cart\CartBusinessBundle\Vo\Item;
 use Rdc\Cart\CartBusinessBundle\Vo\Customer;
 use Rdc\Cart\CartApiBundle\Form\CartType;
