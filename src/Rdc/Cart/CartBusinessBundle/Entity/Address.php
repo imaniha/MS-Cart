@@ -2,6 +2,10 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Entity;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use JMS\Serializer\SerializerBuilder;
+
 /**
  * Address
  */
@@ -88,72 +92,52 @@ class Address
      */
     private $additionalData;
 
-    public function __construct($data)
+    public function __construct(array $options = array())
     {
 
-        $default = [
-            'address_id' => null,
-            'firstname' => '',
-            'lastname' => '',
-            'address1' => '',
-            'address2' => '',
-            'city' => '',
-            'zip' => '',
-            'country_code' => '',
-            'country_label' => '',
-            'phone' => '',
-            'mobile_phone' => '',
-            'work_phone' => '',
-            'fax' => '',
-            'rcs' => '',
-            'access_code' => '',
-            'extra_data' => '',
-            'additional_data' => '',
-        ];
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
 
-        $data = array_merge($default, $data);
+        $options = $resolver->resolve($options);
 
-        $this->addressId = $data['address_id'];
-        $this->firstname = $data['firstname'];
-        $this->lastname = $data['lastname'];
-        $this->address1 = $data['address1'];
-        $this->address2 = $data['address2'];
-        $this->city = $data['city'];
-        $this->zip = $data['zip'];
-        $this->countryCode = $data['country_code'];
-        $this->countryLabel = $data['country_label'];
-        $this->phone = $data['phone'];
-        $this->mobilePhone = $data['mobile_phone'];
-        $this->workPhone = $data['work_phone'];
-        $this->fax = $data['fax'];
-        $this->rcs = $data['rcs'];
-        $this->accessCode = $data['access_code'];
-        $this->additionalData = $data['additional_data'];
+        $accessor = PropertyAccess::createPropertyAccessor();
 
+        foreach ($options as $key => $option) {
+            $accessor->setValue($this, $key, $option);
+        }
+
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                'address_id' => null,
+                'firstname' => '',
+                'lastname' => '',
+                'address1' => '',
+                'address2' => '',
+                'city' => '',
+                'zip' => '',
+                'country_code' => '',
+                'country_label' => '',
+                'phone' => '',
+                'mobile_phone' => '',
+                'work_phone' => '',
+                'fax' => '',
+                'rcs' => '',
+                'access_code' => '',
+                'additional_data' => '',
+            ]
+        );
     }
 
     public function toArray()
     {
+        $serializer = SerializerBuilder::create()->build();
+        $data = $serializer->toArray($this);
 
-
-        return [
-            'address_id' => $this->addressId,
-            'lastname' => $this->lastname,
-            'firstname' => $this->firstname,
-            'address1' => $this->address1,
-            'address2' => $this->address2,
-            'city' => $this->city,
-            'zip' => $this->zip,
-            'country_code' => $this->countryCode,
-            'country_label' => $this->countryLabel,
-            'phone' => $this->phone,
-            'mobile_phone' => $this->mobilePhone,
-            'work_phone' => $this->workPhone,
-            'fax' => $this->fax,
-            'rcs' => $this->rcs,
-            'access_code' => $this->accessCode,
-            'additional_data' => $this->additionalData,
-        ];
+        return $data;
     }
 
     /**
