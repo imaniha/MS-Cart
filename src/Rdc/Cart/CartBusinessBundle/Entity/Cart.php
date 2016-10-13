@@ -89,30 +89,6 @@ class Cart
     private $promotion;
 
     /**
-     * Cart status
-     * @var string
-     */
-    private $test;
-
-    /**
-     * @return string
-     */
-    public function getTest()
-    {
-        return $this->test;
-    }
-
-    /**
-     * @param string $test
-     */
-    public function setTest($test)
-    {
-        $this->test = $test;
-    }
-
-
-
-    /**
      * @return int
      */
     public function getCartId()

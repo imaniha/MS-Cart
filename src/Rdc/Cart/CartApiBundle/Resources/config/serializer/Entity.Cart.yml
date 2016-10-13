@@ -32,4 +32,4 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
         additionalData:
             expose: true
         notified:
-            expose: true
+            expose: false
