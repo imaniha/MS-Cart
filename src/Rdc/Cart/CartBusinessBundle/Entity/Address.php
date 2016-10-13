@@ -135,7 +135,8 @@ class Address
     public function toArray()
     {
 
-        return array(
+
+        return [
             'address_id' => $this->addressId,
             'lastname' => $this->lastname,
             'firstname' => $this->firstname,
@@ -152,7 +153,7 @@ class Address
             'rcs' => $this->rcs,
             'access_code' => $this->accessCode,
             'additional_data' => $this->additionalData,
-        );
+        ];
     }
 
     /**

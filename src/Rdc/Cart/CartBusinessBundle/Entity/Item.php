@@ -22,11 +22,12 @@ class Item
      * @var array
      */
     private $additionalData;
+
     /**
      * @return int
      */
 
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         $default = [
             'item_id' => null,
@@ -36,19 +37,19 @@ class Item
 
         $data = array_merge($default, $data);
 
-        $this->itemId =  $data['item_id'];
-        $this->quantity =  $data['quantity'];
-        $this->additionalData =  $data['additional_data'];
+        $this->itemId = $data['item_id'];
+        $this->quantity = $data['quantity'];
+        $this->additionalData = $data['additional_data'];
 
     }
 
     public function toArray()
     {
-        return array(
+        return [
             'item_id' => $this->itemId,
             'quantity' => $this->quantity,
-            'additional_data' => $this->additionalData
-        );
+            'additional_data' => $this->additionalData,
+        ];
     }
 
     public function getItemId()

@@ -22,7 +22,7 @@ class FormErrorHandler extends JMSFormErrorHandler
 
     private function convertFormToArray(GenericSerializationVisitor $visitor, Form $data)
     {
-        $form = $errors = array();
+        $form = $errors = [];
         $form['success'] = false;
         $form['code'] = 400;
 

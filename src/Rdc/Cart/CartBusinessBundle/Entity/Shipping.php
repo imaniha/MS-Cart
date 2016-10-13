@@ -23,7 +23,7 @@ class Shipping
      */
     private $additionalData;
 
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         $default = [
             'type_id' => null,
@@ -33,20 +33,20 @@ class Shipping
 
         $data = array_merge($default, $data);
 
-        $this->typeId =  $data['type_id'];
-        $this->typeName =  $data['type_name'];
-        $this->additionalData =  $data['additional_data'];
+        $this->typeId = $data['type_id'];
+        $this->typeName = $data['type_name'];
+        $this->additionalData = $data['additional_data'];
 
     }
 
     public function toArray()
     {
 
-        return array(
+        return [
             'type_id' => $this->typeId,
             'type_name' => $this->typeName,
-            'additional_data' => $this->additionalData
-        );
+            'additional_data' => $this->additionalData,
+        ];
 
     }
 
@@ -97,7 +97,6 @@ class Shipping
     {
         $this->additionalData = $additionalData;
     }
-
 
 
 }

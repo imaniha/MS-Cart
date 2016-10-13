@@ -18,11 +18,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Cart
 {
-    public static $cartStatus = array(
+    public static $cartStatus = [
         'CART_STATUS_OPEN' => 1,
         'CART_STATUS_LOCKED' => 2,
         'CART_STATUS_CLOSED' => 3,
-    );
+    ];
 
     /**
      * @var int
@@ -56,7 +56,7 @@ class Cart
     /**
      * @var array
      */
-    private $items;
+    private $items = [];
 
     /**
      * @var Customer
@@ -226,9 +226,9 @@ class Cart
      */
     public function getItems()
     {
-        $items = array();
-
+        $items = [];
         $collection = new ArrayCollection();
+
         foreach($this->items as $item)
         {
             $collection->add(new Item($item));
@@ -261,7 +261,6 @@ class Cart
     public function setCustomer(Customer $customer)
     {
         $this->customer = $customer->toArray();
-
     }
 
     /**
@@ -271,11 +270,8 @@ class Cart
      */
     public function getCustomer()
     {
-        if ($this->customer) {
-            return new Customer($this->customer);
-        } else {
-            return null;
-        }
+
+        return ($this->customer ? new Customer($this->customer) : null);
     }
 
     /**
@@ -306,11 +302,8 @@ class Cart
      */
     public function getAddress()
     {
-        if ($this->address) {
-            return new Address($this->address);
-        } else {
-            return null;
-        }
+
+        return ($this->address ? new Address($this->address) : null);
     }
 
     /**
@@ -326,11 +319,8 @@ class Cart
      */
     public function getPayment()
     {
-        if ($this->payment) {
-            return new Payment($this->payment);
-        } else {
-            return null;
-        }
+
+        return ($this->payment ? new Payment($this->payment) : null);
     }
 
     /**
@@ -346,12 +336,8 @@ class Cart
      */
     public function getShipping()
     {
-        if ($this->shipping) {
-            return new Shipping($this->shipping);
-        } else {
-            return null;
-        }
 
+        return ($this->shipping ? new Shipping($this->shipping) : null);
     }
 
     /**

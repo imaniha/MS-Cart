@@ -33,7 +33,7 @@ class Customer
      */
     private $additionalData;
 
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         $default = [
             'customer_id' => null,
@@ -56,14 +56,13 @@ class Customer
     public function toArray()
     {
 
-        return array(
+        return [
             'customer_id' => $this->customerId,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'email' => $this->email,
             'additional_data' => $this->additionalData,
-        );
-
+        ];
     }
 
     /**

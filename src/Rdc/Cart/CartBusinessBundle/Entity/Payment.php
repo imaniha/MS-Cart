@@ -23,7 +23,7 @@ class Payment
      */
     private $additionalData;
 
-    public function __construct($data = array())
+    public function __construct($data = [])
     {
         $default = [
             'type_id' => null,
@@ -42,11 +42,11 @@ class Payment
     public function toArray()
     {
 
-        return array(
+        return [
             'type_id' => $this->typeId,
             'type_name' => $this->typeName,
             'additional_data' => $this->additionalData
-        );
+        ];
 
     }
 
