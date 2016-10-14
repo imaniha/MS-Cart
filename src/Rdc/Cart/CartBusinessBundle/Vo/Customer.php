@@ -1,6 +1,6 @@
 <?php
 
-namespace Rdc\Cart\CartBusinessBundle\Entity;
+namespace Rdc\Cart\CartBusinessBundle\Vo;
 
 /**
  * Customer

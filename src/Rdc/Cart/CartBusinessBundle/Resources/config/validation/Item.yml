@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Entity\Item:
+Rdc\Cart\CartBusinessBundle\Vo\Item:
     properties:
         itemId:
             - NotBlank: ~

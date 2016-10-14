@@ -1,11 +1,11 @@
 <?php
 
-namespace Rdc\Cart\CartBusinessBundle\Entity;
+namespace Rdc\Cart\CartBusinessBundle\Vo;
 
 /**
- * Payment
+ * Shipping
  */
-class Payment
+class Shipping
 {
 
     /**
@@ -33,9 +33,9 @@ class Payment
 
         $data = array_merge($default, $data);
 
-        $this->typeId =  $data['type_id'];
-        $this->typeName =  $data['type_name'];
-        $this->additionalData =  $data['additional_data'];
+        $this->typeId = $data['type_id'];
+        $this->typeName = $data['type_name'];
+        $this->additionalData = $data['additional_data'];
 
     }
 
@@ -45,7 +45,7 @@ class Payment
         return [
             'type_id' => $this->typeId,
             'type_name' => $this->typeName,
-            'additional_data' => $this->additionalData
+            'additional_data' => $this->additionalData,
         ];
 
     }
@@ -75,7 +75,7 @@ class Payment
     }
 
     /**
-     * @param string $type_name
+     * @param string $typeName
      */
     public function setTypeName($typeName)
     {
@@ -97,4 +97,6 @@ class Payment
     {
         $this->additionalData = $additionalData;
     }
+
+
 }

@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
-use Rdc\Cart\CartBusinessBundle\Entity\Customer;
-use Rdc\Cart\CartBusinessBundle\Entity\Payment;
-use Rdc\Cart\CartBusinessBundle\Entity\Shipping;
-use Rdc\Cart\CartBusinessBundle\Entity\Item;
+use Rdc\Cart\CartBusinessBundle\Vo\Customer;
+use Rdc\Cart\CartBusinessBundle\Vo\Payment;
+use Rdc\Cart\CartBusinessBundle\Vo\Shipping;
+use Rdc\Cart\CartBusinessBundle\Vo\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 
 

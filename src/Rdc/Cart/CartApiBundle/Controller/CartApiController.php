@@ -12,8 +12,8 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\Form\Form;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
-use Rdc\Cart\CartBusinessBundle\Entity\Item;
-use Rdc\Cart\CartBusinessBundle\Entity\Customer;
+use Rdc\Cart\CartBusinessBundle\Vo\Item;
+use Rdc\Cart\CartBusinessBundle\Vo\Customer;
 use Rdc\Cart\CartApiBundle\Form\CartType;
 use Rdc\Cart\CartApiBundle\Form\ItemType;
 use Rdc\Cart\CartApiBundle\Form\CartAddressType;
@@ -162,7 +162,7 @@ class CartApiController extends FOSRestController
      * @ApiDoc(
      *  resource=true,
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Customer",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Customer",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
@@ -231,7 +231,7 @@ class CartApiController extends FOSRestController
      * @ApiDoc(
      *  resource=true,
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Item",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Item",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
@@ -344,7 +344,7 @@ class CartApiController extends FOSRestController
      *  description="Add address to Cart",
      *
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Address",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Address",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
@@ -419,7 +419,7 @@ class CartApiController extends FOSRestController
      *  description="Add payment to Cart",
      *
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Payment",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Payment",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
@@ -489,7 +489,7 @@ class CartApiController extends FOSRestController
      *  description="Add shipping to Cart",
      *
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Shipping",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Shipping",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"

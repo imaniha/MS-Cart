@@ -26,7 +26,7 @@ class CustomerType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Customer',
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Customer',
                 'csrf_protection' => false,
             ]
         );

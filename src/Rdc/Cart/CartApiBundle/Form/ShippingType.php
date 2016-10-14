@@ -23,7 +23,7 @@ class ShippingType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Shipping',
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Shipping',
                 'csrf_protection' => false,
                 'error_bubbling' => false,
             ]

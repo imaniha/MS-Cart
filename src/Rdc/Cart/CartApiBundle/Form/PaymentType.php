@@ -23,7 +23,7 @@ class PaymentType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Payment',
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Payment',
                 'csrf_protection' => false,
             ]
         );

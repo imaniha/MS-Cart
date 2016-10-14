@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Entity\Customer:
+Rdc\Cart\CartBusinessBundle\Vo\Customer:
     properties:
         customerId:
             - NotBlank: ~

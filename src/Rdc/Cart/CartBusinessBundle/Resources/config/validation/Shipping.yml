@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Entity\Shipping:
+Rdc\Cart\CartBusinessBundle\Vo\Shipping:
     properties:
         typeId:
             - NotBlank: ~
@@ -8,4 +8,3 @@ Rdc\Cart\CartBusinessBundle\Entity\Shipping:
             - NotBlank: ~
             - Type:
                 type: string
-

@@ -25,6 +25,8 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             expose: true
         address:
             expose: true
+        shipping:
+            expose: true
         customer:
             expose: true
         payment:

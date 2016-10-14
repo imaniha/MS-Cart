@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Entity\Payment:
+Rdc\Cart\CartBusinessBundle\Vo\Payment:
     properties:
         typeId:
             - NotBlank: ~
