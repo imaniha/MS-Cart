@@ -24,17 +24,18 @@ help:
 
 deploy:
 	composer install
-	rm -rf app/cache/*
+	rm -rf var/cache/*
 	php bin/console cache:warmup --env dev
  
 deploy-prod:
 	composer install --no-progress --no-dev -o --quiet
-	rm -rf app/cache/*
+	rm -rf var/cache/*
 	php bin/console cache:warmup --env prod
  
 perm:
-	setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX app/cache app/logs
-	setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+	setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX var/cache var/logs var/sessions
+	setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx var/cache var/logs var/sessions
+
 
 perm-stub:
 	chmod 777 src/Stub/Bundle/PaylineBundle/Resources/data
@@ -66,14 +67,14 @@ user-demo:
 	php bin/console fos:user:create admin admin@free.fr admin --super-admin
 
 clear-cache:
-	rm -rf app/cache/*
+	rm -rf var/cache/*
 
 clear-log:
-	rm -rf app/logs/*.log
+	rm -rf var/logs/*.log
 
 sqlite-init:
 	mkdir app/data
-	chmod -R 777 app/data
+	chmod -R 777 var/data
 
 tu:
 	bin/phpunit -c app/phpunit.xml.dist --testsuite TUA	
