@@ -88,7 +88,6 @@ class Cart
      */
     private $promotion;
 
-
     /**
      * @return int
      */
