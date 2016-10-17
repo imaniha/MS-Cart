@@ -3,8 +3,10 @@
 namespace Rdc\Cart\CartBusinessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Groups;
 
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
 use Rdc\Cart\CartBusinessBundle\Vo\Customer;
 use Rdc\Cart\CartBusinessBundle\Vo\Payment;
@@ -15,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Cart
+ * @ExclusionPolicy("all")
  */
 class Cart
 {
@@ -26,24 +29,28 @@ class Cart
 
     /**
      * @var int
+     * @Expose
      */
     private $cart_id;
 
     /**
      * Cart shop id
      * @var int
+     * @Expose
      */
     private $shopId;
 
     /**
      * Cart channel
      * @var string
+     * @Expose
      */
     private $channel;
 
     /**
      * Cart status
      * @var string
+     * @Expose
      */
     private $status;
 
@@ -55,36 +62,43 @@ class Cart
 
     /**
      * @var array
+     * @Expose
      */
     private $items = [];
 
     /**
      * @var Customer
+     * @Expose
      */
     private $customer;
 
     /**
      * @var Address
+     * @Expose
      */
     private $address;
 
     /**
      * @var Payment
+     * @Expose
      */
     private $payment;
 
     /**
      * @var Shipping
+     * @Expose
      */
     private $shipping;
 
     /**
      * @var array
+     * @Expose
      */
     private $additionalData;
 
     /**
      * @var array
+     * @Expose
      */
     private $promotion;
 

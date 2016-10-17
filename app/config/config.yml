@@ -80,10 +80,3 @@ fos_rest:
         rules:
             # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
             - { path: '^/', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
-
-jms_serializer:
-    metadata:
-        directories:
-            cart:
-                namespace_prefix: "Rdc\\Cart\\CartBusinessBundle"
-                path: "@CartApiBundle/Resources/config/serializer"
