@@ -94,6 +94,12 @@ class Cart
      * @var array
      * @Expose
      */
+    private $behaviors;
+
+    /**
+     * @var array
+     * @Expose
+     */
     private $additionalData;
 
     /**
@@ -267,14 +273,62 @@ class Cart
         return $this;
     }
 
+
+    /**
+     * Set behaviors
+     *
+     * @param array $behavior
+     * @return Cart
+     */
+    public function setBehaviors($behaviors)
+    {
+        $this->behaviors = $behaviors;
+
+        return $this;
+    }
+
+    /**
+     * Get behaviors
+     *
+     * @return array
+     */
+    public function getBehaviors()
+    {
+        $behaviors = [];
+        $collection = new ArrayCollection();
+
+        foreach($this->behaviors as $behavior)
+        {
+            $collection->add(new MultiAddressCartBehavior($behavior));
+        }
+
+        return $behaviors;
+    }
+
+    public function addBehavior($behaviors)
+    {
+
+        $this->items[$behaviors->getItemId()] = $behaviors->toArray();
+        $this->setItems($this->items);
+
+        return $this;
+    }
+
+    public function removeBehavior($behaviors)
+    {
+        $this->behaviors[] = $behaviors;
+
+        return $this;
+    }
+
     /**
      * Set customer
      *
-     * @param \Rdc\Cart\CartBusinessBundle\Entity\Customer $customer
+     * @param \Rdc\Cart\CartBusinessBundle\Service\AbstractCartBehavior $behavior
      */
-    public function setCustomer(Customer $customer)
+    public function setBehavior(AbstractCartBehavior $behaviors)
     {
-        $this->customer = $customer->toArray();
+        $this->behaviors = $behaviors->toArray();
     }
 
     /**

@@ -23,3 +23,5 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - NotBlank: ~
             - Type:
                 type: string
+        behaviors:
+            - Type: array
