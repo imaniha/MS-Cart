@@ -2,10 +2,11 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Payment
  */
-class Payment
+class Payment extends AbstractVo
 {
 
     /**
@@ -23,31 +24,15 @@ class Payment
      */
     private $additionalData;
 
-    public function __construct($data = [])
+    protected function configureOptions(OptionsResolver $resolver)
     {
-        $default = [
-            'type_id' => null,
-            'type_name' => '',
-            'additional_data' => '',
-        ];
-
-        $data = array_merge($default, $data);
-
-        $this->typeId =  $data['type_id'];
-        $this->typeName =  $data['type_name'];
-        $this->additionalData =  $data['additional_data'];
-
-    }
-
-    public function toArray()
-    {
-
-        return [
-            'type_id' => $this->typeId,
-            'type_name' => $this->typeName,
-            'additional_data' => $this->additionalData
-        ];
-
+        $resolver->setDefaults(
+            [
+                'type_id' => null,
+                'type_name' => '',
+                'additional_data' => '',
+            ]
+        );
     }
 
     /**

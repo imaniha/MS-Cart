@@ -9,7 +9,7 @@ use JMS\Serializer\SerializerBuilder;
 /**
  * Address
  */
-class Address
+class Address extends AbstractVo
 {
     /**
      * @var int
@@ -91,23 +91,7 @@ class Address
      */
     private $additionalData;
 
-    public function __construct(array $options = array())
-    {
-
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-
-        $options = $resolver->resolve($options);
-
-        $accessor = PropertyAccess::createPropertyAccessor();
-
-        foreach ($options as $key => $option) {
-            $accessor->setValue($this, $key, $option);
-        }
-
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
@@ -129,14 +113,6 @@ class Address
                 'additional_data' => '',
             ]
         );
-    }
-
-    public function toArray()
-    {
-        $serializer = SerializerBuilder::create()->build();
-        $data = $serializer->toArray($this);
-
-        return $data;
     }
 
     /**

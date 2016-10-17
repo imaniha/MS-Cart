@@ -2,10 +2,11 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Customer
  */
-class Customer
+class Customer extends AbstractVo
 {
 
     /**
@@ -33,36 +34,17 @@ class Customer
      */
     private $additionalData;
 
-    public function __construct($data = [])
+    protected function configureOptions(OptionsResolver $resolver)
     {
-        $default = [
-            'customer_id' => null,
-            'firstname' => '',
-            'lastname' => '',
-            'email' => '',
-            'additional_data' => '',
-        ];
-
-        $data = array_merge($default, $data);
-
-        $this->customerId = $data['customer_id'];
-        $this->firstname = $data['firstname'];
-        $this->lastname = $data['lastname'];
-        $this->email = $data['email'];
-        $this->additionalData = $data['additional_data'];
-
-    }
-
-    public function toArray()
-    {
-
-        return [
-            'customer_id' => $this->customerId,
-            'firstname' => $this->firstname,
-            'lastname' => $this->lastname,
-            'email' => $this->email,
-            'additional_data' => $this->additionalData,
-        ];
+        $resolver->setDefaults(
+            [
+                'customer_id' => null,
+                'firstname' => '',
+                'lastname' => '',
+                'email' => '',
+                'additional_data' => '',
+            ]
+        );
     }
 
     /**

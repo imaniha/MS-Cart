@@ -2,10 +2,11 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Item
  */
-class Item
+class Item extends AbstractVo
 {
 
     /**
@@ -23,33 +24,15 @@ class Item
      */
     private $additionalData;
 
-    /**
-     * @return int
-     */
-
-    public function __construct($data = [])
+    protected function configureOptions(OptionsResolver $resolver)
     {
-        $default = [
-            'item_id' => null,
-            'quantity' => null,
-            'additional_data' => '',
-        ];
-
-        $data = array_merge($default, $data);
-
-        $this->itemId = $data['item_id'];
-        $this->quantity = $data['quantity'];
-        $this->additionalData = $data['additional_data'];
-
-    }
-
-    public function toArray()
-    {
-        return [
-            'item_id' => $this->itemId,
-            'quantity' => $this->quantity,
-            'additional_data' => $this->additionalData,
-        ];
+        $resolver->setDefaults(
+            [
+                'item_id' => null,
+                'quantity' => null,
+                'additional_data' => '',
+            ]
+        );
     }
 
     public function getItemId()
