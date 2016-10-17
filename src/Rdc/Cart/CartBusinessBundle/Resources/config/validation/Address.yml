@@ -50,6 +50,9 @@ Rdc\Cart\CartBusinessBundle\Vo\Address:
         fax:
             - Type:
                 type: string
+        type:
+            - Type:
+                type: string
         rcs:
             - Type:
                 type: string

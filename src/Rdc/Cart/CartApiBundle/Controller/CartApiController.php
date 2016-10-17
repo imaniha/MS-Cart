@@ -325,8 +325,9 @@ class CartApiController extends FOSRestController
      *<pre>
      * {
      *   "cart":{
-     *     "address": {
+     *     "address": [{
      *       "address_id": 1,
+     *       "type": "billing",
      *       "firstname": "Nicolas",
      *       "lastname": "Rozen",
      *       "address1": "12 rue roger poncelet",
@@ -344,7 +345,7 @@ class CartApiController extends FOSRestController
      *           "extra1": "data extra1",
      *           "extra2": "data extra2"
      *       }
-     *     }
+     *     }]
      *   }
      * }
      *</pre>
@@ -383,7 +384,7 @@ class CartApiController extends FOSRestController
         $form = $this->createForm(CartAddressType::class, $cart);
 
         $form->handleRequest($request);
-
+//var_dump($form->getData());die;
         try {
             $this->validateForm($form);
 

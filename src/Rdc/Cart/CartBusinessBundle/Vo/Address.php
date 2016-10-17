@@ -87,6 +87,11 @@ class Address extends AbstractVo
     private $accessCode;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @var array
      */
     private $additionalData;
@@ -109,6 +114,7 @@ class Address extends AbstractVo
                 'work_phone' => '',
                 'fax' => '',
                 'rcs' => '',
+                'type' => '',
                 'access_code' => '',
                 'additional_data' => '',
             ]
@@ -243,6 +249,13 @@ class Address extends AbstractVo
         return $this->additionalData;
     }
 
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
     /**
      * @param int $address_id
@@ -372,5 +385,12 @@ class Address extends AbstractVo
         $this->additionalData = $additionalData;
     }
 
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
 }

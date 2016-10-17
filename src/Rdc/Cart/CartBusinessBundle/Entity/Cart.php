@@ -73,7 +73,7 @@ class Cart
     private $customer;
 
     /**
-     * @var Address
+     * @var array
      * @Expose
      */
     private $address;
@@ -366,20 +366,58 @@ class Cart
     }
 
     /**
-     * @return \Rdc\Cart\CartBusinessBundle\Vo\Address
-     */
-    public function getAddress()
-    {
-
-        return ($this->address ? new Address($this->address) : null);
-    }
-
-    /**
-     * @param \Rdc\Cart\CartBusinessBundle\Vo\Address $address
+     * Set address
+     *
+     * @param array $address
+     * @return Cart
      */
     public function setAddress($address)
     {
-        $this->address = $address->toArray();
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return array
+     */
+    public function getAddress()
+    {
+        if(null === $this->address){
+            return null;
+        }
+
+        $collection = new ArrayCollection();
+
+        foreach($this->address as $add)
+        {
+            if(is_object($add)){
+                $collection->set($add->getType(),$add);
+            }else{
+                $collection->set($add['address_id'],new Address($add));
+            }
+        }
+
+        return $collection;
+    }
+
+    public function addAddres($address)
+    {
+
+        if($address->getAddressId()){
+
+            $this->address[$address->getType()] = $address->toArray();
+            $this->setAddress($this->address);
+        }
+
+        return $this;
+    }
+
+    public function removeAddres($address)
+    {
+
+        return $this;
     }
 
     /**
