@@ -246,29 +246,36 @@ class Cart
      */
     public function getItems()
     {
-        $items = [];
+        if(null === $this->items){
+            return null;
+        }
+
         $collection = new ArrayCollection();
 
         foreach($this->items as $item)
         {
-            $collection->add(new Item($item));
+            if(is_object($item)){
+                $collection->add($item);
+            }else{
+                $collection->add(new Item($item));
+            }
         }
 
-        return $items;
+        return $collection;
     }
 
     public function addItem($item)
     {
-
-        $this->items[$item->getItemId()] = $item->toArray();
-        $this->setItems($this->items);
+        if($item->getItemId()) {
+            $this->items[$item->getItemId()] = $item->toArray();
+            $this->setItems($this->items);
+        }
 
         return $this;
     }
 
     public function removeItem($item)
     {
-        $this->items[] = $item;
 
         return $this;
     }

@@ -24,7 +24,6 @@ class ItemType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Item',
-                'allow_extra_fields' => true,
                 'csrf_protection' => false,
             ]
         );
