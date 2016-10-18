@@ -1,5 +1,5 @@
 <?php
-
+namespace Rdc\Cart\CartBusinessBundle\Service\Behaviors;
 
 Abstract class AbstractCartBehavior
 {
@@ -21,6 +21,8 @@ Abstract class AbstractCartBehavior
     {
         $this->type = get_class($this);
     }
+
+    abstract function validate();
 
 
 }

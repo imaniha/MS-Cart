@@ -21,6 +21,7 @@ use Rdc\Cart\CartApiBundle\Form\CartPaymentType;
 use Rdc\Cart\CartApiBundle\Form\CartShippingType;
 use Rdc\Cart\CartApiBundle\Form\CartCustomerType;
 use Rdc\Cart\CartApiBundle\Form\CartItemsType;
+use Rdc\Cart\CartApiBundle\Form\CartBehaviorType;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Rdc\Cart\CartApiBundle\Exception\FormValidationException;
@@ -384,7 +385,7 @@ class CartApiController extends FOSRestController
         $form = $this->createForm(CartAddressType::class, $cart);
 
         $form->handleRequest($request);
-//var_dump($form->getData());die;
+
         try {
             $this->validateForm($form);
 
@@ -721,6 +722,77 @@ class CartApiController extends FOSRestController
             $this->getCartBusiness()->notify($cart);
             $view = $this->view(['success' => true], 200);
 
+        } catch (\Exception $exception) {
+            $data = ['success' => false, 'message' => $exception->getMessage()];
+            $view = $this->view($data, 400);
+        }
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * Apply a behavior
+     *
+     * **Request Format**
+     *<pre>
+     * {
+     *   "cart":{
+     *     "behaviors": [{
+     *         "type": "MultiAddressCart",
+     *         "source": 1,
+     *         "target": [1,2]
+     *  }]
+     *   }
+     * }
+     *</pre>
+     *
+     * @Post("cart/{cart_id}/behavior",requirements={"_format"="json"},defaults={"_format" = "json"}, name="post_behavior")
+     * @ParamConverter("cart", class="CartBusinessBundle:Cart")
+     * @ApiDoc(
+     *
+     *  input={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "groups"={"nelmio"},
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
+     *  resource=true,
+     *  description="Apply a Behavior",
+     *  section="Behaviors",
+     *
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when the url is malformed",
+     *      500="Returned when a technical error occurs, request must be retry"
+     *  },
+     *
+     * )
+     *
+     * @return array
+     */
+
+    public function postBehaviorAction(Request $request, Cart $cart)
+    {
+
+        $form = $this->createForm(CartBehaviorType::class, $cart);
+
+        $form->handleRequest($request);
+
+        try {
+            $this->validateForm($form);
+
+            $cart = $this->getCartBusiness()->createCart($cart);
+            $view = $this->view($cart, 200);
+
+        } catch (FormValidationException $exception) {
+            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
             $data = ['success' => false, 'message' => $exception->getMessage()];
             $view = $this->view($data, 400);

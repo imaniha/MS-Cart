@@ -1,0 +1,15 @@
+Rdc\Cart\CartBusinessBundle\Vo\Behavior:
+    properties:
+        source:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        target:
+            - NotBlank: ~
+            - Type:
+                type: array
+        type:
+            - NotBlank: ~
+            - Type:
+                type: string
+

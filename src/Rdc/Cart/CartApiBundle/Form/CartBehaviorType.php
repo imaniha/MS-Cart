@@ -2,23 +2,22 @@
 
 namespace Rdc\Cart\CartApiBundle\Form;
 
-use Rdc\Cart\CartApiBundle\Form\AddressType;
+use Rdc\Cart\CartApiBundle\Form\BehaviorType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CartAddressType extends AbstractType
+class CartBehaviorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
-            'address',
+            'behaviors',
             CollectionType::class,
             array(
-                'entry_type' => AddressType::class,
+                'entry_type' => BehaviorType::class,
                 'allow_add' => true,
                 'by_reference' => false,
             )

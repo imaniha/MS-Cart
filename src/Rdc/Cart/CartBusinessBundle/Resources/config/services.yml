@@ -8,3 +8,8 @@ services:
 
     address.business:
         class: Rdc\Cart\CartBusinessBundle\Service\AddressBusiness
+
+    cart.behavior.listener:
+        class: Rdc\Cart\CartBusinessBundle\Service\Behaviors\BehaviorValidator
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }

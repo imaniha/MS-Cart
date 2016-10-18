@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
+use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Vo\Customer;
 use Rdc\Cart\CartBusinessBundle\Vo\Payment;
 use Rdc\Cart\CartBusinessBundle\Vo\Shipping;
@@ -289,6 +290,7 @@ class Cart
      */
     public function setBehaviors($behaviors)
     {
+
         $this->behaviors = $behaviors;
 
         return $this;
@@ -301,29 +303,39 @@ class Cart
      */
     public function getBehaviors()
     {
-        $behaviors = [];
+
+        if(null === $this->behaviors){
+            return null;
+        }
+
         $collection = new ArrayCollection();
 
         foreach($this->behaviors as $behavior)
         {
-            $collection->add(new MultiAddressCartBehavior($behavior));
+            if(is_object($behavior)){
+                $collection->add($behavior);
+            }else{
+                $collection->add(new Behavior($behavior));
+            }
         }
 
-        return $behaviors;
+        return $collection;
     }
 
-    public function addBehavior($behaviors)
+    public function addBehavior($behavior)
     {
 
-        $this->items[$behaviors->getItemId()] = $behaviors->toArray();
-        $this->setItems($this->items);
+        if($behavior->getType()){
+            $this->behaviors[] = $behavior->toArray();
+            $this->setBehaviors($this->behaviors);
+        }
 
         return $this;
     }
 
     public function removeBehavior($behaviors)
     {
-        $this->behaviors[] = $behaviors;
+        //$this->behaviors[] = $behaviors;
 
         return $this;
     }
@@ -331,11 +343,11 @@ class Cart
     /**
      * Set customer
      *
-     * @param \Rdc\Cart\CartBusinessBundle\Service\AbstractCartBehavior $behavior
+     * @param \Rdc\Cart\CartBusinessBundle\Entity\Customer $customer
      */
-    public function setBehavior(AbstractCartBehavior $behaviors)
+    public function setCustomer(Customer $customer)
     {
-        $this->behaviors = $behaviors->toArray();
+        $this->customer = $customer->toArray();
     }
 
     /**

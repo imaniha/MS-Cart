@@ -10,6 +10,8 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - Valid: ~
         items:
             - Valid: { traverse: true }
+        behaviors:
+            - Valid: { traverse: true }
     properties:
         channel:
             - NotBlank: ~
@@ -23,5 +25,4 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - NotBlank: ~
             - Type:
                 type: string
-        behaviors:
-            - Type: array
+
