@@ -1,17 +1,18 @@
 <?php
 
-namespace Rdc\Cart\CartBusinessBundle\Entity;
+namespace Rdc\Cart\CartBusinessBundle\Vo;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Customer
  */
-class Customer
+class Customer extends AbstractVo
 {
 
     /**
      * @var int
      */
-    private $customer_id;
+    private $customerId;
 
     /**
      * @var string
@@ -31,39 +32,19 @@ class Customer
     /**
      * @var array
      */
-    private $additional_data;
+    private $additionalData;
 
-    public function __construct($data = array())
+    protected function configureOptions(OptionsResolver $resolver)
     {
-        $default = [
-            'customer_id' => null,
-            'firstname' => '',
-            'lastname' => '',
-            'email' => '',
-            'additional_data' => '',
-        ];
-
-        $data = array_merge($default, $data);
-
-        $this->customer_id =  $data['customer_id'];
-        $this->firstname =  $data['firstname'];
-        $this->lastname =  $data['lastname'];
-        $this->email =  $data['email'];
-        $this->additional_data =  $data['additional_data'];
-
-    }
-
-    public function toArray()
-    {
-
-        return array(
-            'customer_id' => $this->customer_id,
-            'firstname' => $this->firstname,
-            'lastname' => $this->lastname,
-            'email' => $this->email,
-            'additional_data' => $this->additional_data
+        $resolver->setDefaults(
+            [
+                'customer_id' => null,
+                'firstname' => '',
+                'lastname' => '',
+                'email' => '',
+                'additional_data' => '',
+            ]
         );
-
     }
 
     /**
@@ -71,15 +52,15 @@ class Customer
      */
     public function getCustomerId()
     {
-        return $this->customer_id;
+        return $this->customerId;
     }
 
     /**
-     * @param int $customer_id
+     * @param int $customerId
      */
-    public function setCustomerId($customer_id)
+    public function setCustomerId($customerId)
     {
-        $this->customer_id = $customer_id;
+        $this->customerId = $customerId;
     }
 
     /**
@@ -135,17 +116,16 @@ class Customer
      */
     public function getAdditionalData()
     {
-        return $this->additional_data;
+        return $this->additionalData;
     }
 
     /**
      * @param array $additional_data
      */
-    public function setAdditionalData($additional_data)
+    public function setAdditionalData($additionalData)
     {
-        $this->additional_data = $additional_data;
+        $this->additionalData = $additionalData;
     }
-
 
 
 }

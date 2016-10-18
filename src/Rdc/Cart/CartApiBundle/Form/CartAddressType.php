@@ -18,10 +18,10 @@ class CartAddressType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Cart',
                 'csrf_protection' => false,
-            )
+            ]
         );
     }
 

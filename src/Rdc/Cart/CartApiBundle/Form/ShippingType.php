@@ -22,11 +22,11 @@ class ShippingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Entity\Shipping',
+            [
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Shipping',
                 'csrf_protection' => false,
                 'error_bubbling' => false,
-            )
+            ]
         );
     }
 

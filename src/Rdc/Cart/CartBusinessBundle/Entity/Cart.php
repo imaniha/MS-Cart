@@ -3,47 +3,54 @@
 namespace Rdc\Cart\CartBusinessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Groups;
 
-use Rdc\Cart\CartBusinessBundle\Entity\Address;
-use Rdc\Cart\CartBusinessBundle\Entity\Customer;
-use Rdc\Cart\CartBusinessBundle\Entity\Payment;
-use Rdc\Cart\CartBusinessBundle\Entity\Shipping;
-use Rdc\Cart\CartBusinessBundle\Entity\Item;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use Rdc\Cart\CartBusinessBundle\Vo\Address;
+use Rdc\Cart\CartBusinessBundle\Vo\Customer;
+use Rdc\Cart\CartBusinessBundle\Vo\Payment;
+use Rdc\Cart\CartBusinessBundle\Vo\Shipping;
+use Rdc\Cart\CartBusinessBundle\Vo\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
  * Cart
+ * @ExclusionPolicy("all")
  */
 class Cart
 {
-    public static $cartStatus = array(
+    public static $cartStatus = [
         'CART_STATUS_OPEN' => 1,
         'CART_STATUS_LOCKED' => 2,
         'CART_STATUS_CLOSED' => 3,
-    );
+    ];
 
     /**
      * @var int
+     * @Expose
      */
     private $cart_id;
 
     /**
      * Cart shop id
      * @var int
+     * @Expose
      */
     private $shopId;
 
     /**
      * Cart channel
      * @var string
+     * @Expose
      */
     private $channel;
 
     /**
      * Cart status
      * @var string
+     * @Expose
      */
     private $status;
 
@@ -55,36 +62,43 @@ class Cart
 
     /**
      * @var array
+     * @Expose
      */
-    private $items;
+    private $items = [];
 
     /**
      * @var Customer
+     * @Expose
      */
     private $customer;
 
     /**
      * @var Address
+     * @Expose
      */
     private $address;
 
     /**
      * @var Payment
+     * @Expose
      */
     private $payment;
 
     /**
      * @var Shipping
+     * @Expose
      */
     private $shipping;
 
     /**
      * @var array
+     * @Expose
      */
     private $additionalData;
 
     /**
      * @var array
+     * @Expose
      */
     private $promotion;
 
@@ -120,16 +134,6 @@ class Cart
     }
 
     /**
-     * Get item_id
-     *
-     * @return integer
-     */
-    public function getItemId()
-    {
-        return $this->item_id;
-    }
-
-    /**
      * Set shopId
      *
      * @param integer $shopId
@@ -142,6 +146,7 @@ class Cart
         return $this;
     }
 
+    /**
     /**
      * Get shopId
      *
@@ -235,9 +240,9 @@ class Cart
      */
     public function getItems()
     {
-        $items = array();
-
+        $items = [];
         $collection = new ArrayCollection();
+
         foreach($this->items as $item)
         {
             $collection->add(new Item($item));
@@ -270,7 +275,6 @@ class Cart
     public function setCustomer(Customer $customer)
     {
         $this->customer = $customer->toArray();
-
     }
 
     /**
@@ -280,11 +284,8 @@ class Cart
      */
     public function getCustomer()
     {
-        if ($this->customer) {
-            return new Customer($this->customer);
-        } else {
-            return null;
-        }
+
+        return ($this->customer ? new Customer($this->customer) : null);
     }
 
     /**
@@ -311,19 +312,16 @@ class Cart
     }
 
     /**
-     * @return \Rdc\Cart\CartBusinessBundle\Entity\Address
+     * @return \Rdc\Cart\CartBusinessBundle\Vo\Address
      */
     public function getAddress()
     {
-        if ($this->address) {
-            return new Address($this->address);
-        } else {
-            return null;
-        }
+
+        return ($this->address ? new Address($this->address) : null);
     }
 
     /**
-     * @param \Rdc\Cart\CartBusinessBundle\Entity\Address $address
+     * @param \Rdc\Cart\CartBusinessBundle\Vo\Address $address
      */
     public function setAddress($address)
     {
@@ -335,11 +333,8 @@ class Cart
      */
     public function getPayment()
     {
-        if ($this->payment) {
-            return new Payment($this->payment);
-        } else {
-            return null;
-        }
+
+        return ($this->payment ? new Payment($this->payment) : null);
     }
 
     /**
@@ -355,12 +350,8 @@ class Cart
      */
     public function getShipping()
     {
-        if ($this->shipping) {
-            return new Shipping($this->shipping);
-        } else {
-            return null;
-        }
 
+        return ($this->shipping ? new Shipping($this->shipping) : null);
     }
 
     /**

@@ -1,6 +1,6 @@
-Rdc\Cart\CartBusinessBundle\Entity\Customer:
+Rdc\Cart\CartBusinessBundle\Vo\Customer:
     properties:
-        customer_id:
+        customerId:
             - NotBlank: ~
             - Type:
                 type: integer
