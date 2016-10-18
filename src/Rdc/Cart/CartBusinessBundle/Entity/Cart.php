@@ -392,11 +392,11 @@ class Cart
     /**
      * Set customer
      *
-     * @param \Rdc\Cart\CartBusinessBundle\Service\AbstractCartBehavior $behavior
+     * @param \Rdc\Cart\CartBusinessBundle\Entity\Customer $customer
      */
-    public function setBehavior(AbstractCartBehavior $behaviors)
+    public function setCustomer(Customer $customer)
     {
-        $this->behaviors = $behaviors->toArray();
+        $this->customer = $customer->toArray();
     }
 
     /**
