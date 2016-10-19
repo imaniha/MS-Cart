@@ -12,3 +12,9 @@ _errors:
 
 _main:
     resource: routing.yml
+
+cart_stub:
+    resource: "@StubCartBundle/Controller/"
+    type:     rest
+    prefix:   /
+
