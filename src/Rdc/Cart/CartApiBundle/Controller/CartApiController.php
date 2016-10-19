@@ -25,14 +25,26 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Rdc\Cart\CartApiBundle\Exception\FormValidationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class CartApiController
  *
  */
-
 class CartApiController extends FOSRestController
 {
+
+    /**
+     * @Get("/", name="cart_api")
+     * @Template("@CartApi/default/index.html.twig")
+     */
+
+    public function defaultAction()
+    {
+
+        return [];
+    }
+
     /**
      * Create new Cart
      *
