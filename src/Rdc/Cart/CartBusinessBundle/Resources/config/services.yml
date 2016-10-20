@@ -10,6 +10,7 @@ services:
         class: Rdc\Cart\CartBusinessBundle\Service\AddressBusiness
 
     cart.behavior.listener:
-        class: Rdc\Cart\CartBusinessBundle\Service\Behaviors\BehaviorValidator
+        class: Rdc\Cart\CartBusinessBundle\Service\Behavior\EventListener\BehaviorValidator
+        arguments: ['@validator']
         tags:
             - { name: doctrine.event_listener, event: preUpdate }

@@ -35,6 +35,7 @@ class BehaviorType extends AbstractType
             [
                 'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Behavior',
                 'csrf_protection' => false,
+                'allow_extra_fields' => true
             ]
         );
     }

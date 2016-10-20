@@ -155,7 +155,6 @@ class Cart
 
     /**
     /**
-    /**
      * Get shopId
      *
      * @return integer
@@ -248,17 +247,16 @@ class Cart
      */
     public function getItems()
     {
-        if(null === $this->items){
+        if (null === $this->items) {
             return null;
         }
 
         $collection = new ArrayCollection();
 
-        foreach($this->items as $item)
-        {
-            if(is_object($item)){
+        foreach ($this->items as $item) {
+            if (is_object($item)) {
                 $collection->add($item);
-            }else{
+            } else {
                 $collection->add(new Item($item));
             }
         }
@@ -266,9 +264,20 @@ class Cart
         return $collection;
     }
 
+    /**
+     * Get items
+     *
+     * @return array
+     */
+    public function getItemsAsArray()
+    {
+
+        return $this->items;
+    }
+
     public function addItem($item)
     {
-        if($item->getItemId()) {
+        if ($item->getItemId()) {
             $this->items[$item->getItemId()] = $item->toArray();
             $this->setItems($this->items);
         }
@@ -304,30 +313,51 @@ class Cart
      */
     public function getBehaviors()
     {
-
-        if(null === $this->behaviors){
+        if (null === $this->behaviors) {
             return null;
         }
 
         $collection = new ArrayCollection();
 
-        foreach($this->behaviors as $behavior)
-        {
-            if(is_object($behavior)){
+        foreach ($this->behaviors as $behavior) {
+            if (is_object($behavior)) {
                 $collection->add($behavior);
-            }else{
-                $collection->add(new Behavior($behavior));
+            } else {
+                foreach($behavior as $source){
+                    $collection->add(new Behavior($source));
+                }
+
             }
         }
 
         return $collection;
     }
 
+    /**
+     * Get behaviors
+     *
+     * @return array
+     */
+    public function getBehaviorsByType($type)
+    {
+
+        return isset($this->behaviors[$type])?$this->behaviors[$type]:null;
+    }
+
     public function addBehavior($behavior)
     {
 
-        if($behavior->getType()){
-            $this->behaviors[] = $behavior->toArray();
+        if ($behavior->getType()) {
+            if (isset($this->behaviors[$behavior->getType()])
+                && isset($this->behaviors[$behavior->getType()][$behavior->getSource()])
+            ) {
+                $target = array_merge($this->behaviors[$behavior->getType()][$behavior->getSource()]['target'], $behavior->getTarget());
+                $target = array_unique($target);
+                $target = array_values($target);
+                $behavior->setTarget($target);
+            }
+            $this->behaviors[$behavior->getType()][$behavior->getSource()] = $behavior->toArray();
+
             $this->setBehaviors($this->behaviors);
         }
 
@@ -337,54 +367,6 @@ class Cart
     public function removeBehavior($behaviors)
     {
         //$this->behaviors[] = $behaviors;
-
-        return $this;
-    }
-
-
-    /**
-     * Set behaviors
-     *
-     * @param array $behavior
-     * @return Cart
-     */
-    public function setBehaviors($behaviors)
-    {
-        $this->behaviors = $behaviors;
-
-        return $this;
-    }
-
-    /**
-     * Get behaviors
-     *
-     * @return array
-     */
-    public function getBehaviors()
-    {
-        $behaviors = [];
-        $collection = new ArrayCollection();
-
-        foreach($this->behaviors as $behavior)
-        {
-            $collection->add(new MultiAddressCartBehavior($behavior));
-        }
-
-        return $behaviors;
-    }
-
-    public function addBehavior($behaviors)
-    {
-
-        $this->items[$behaviors->getItemId()] = $behaviors->toArray();
-        $this->setItems($this->items);
-
-        return $this;
-    }
-
-    public function removeBehavior($behaviors)
-    {
-        $this->behaviors[] = $behaviors;
 
         return $this;
     }
@@ -442,6 +424,7 @@ class Cart
     public function setAddress($address)
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -452,28 +435,41 @@ class Cart
      */
     public function getAddress()
     {
-        if(null === $this->address){
+        if (null === $this->address) {
             return null;
         }
 
         $collection = new ArrayCollection();
 
-        foreach($this->address as $add)
-        {
-            if(is_object($add)){
-                $collection->set($add->getType(),$add);
-            }else{
-                $collection->set($add['address_id'],new Address($add));
+        foreach ($this->address as $add) {
+            if (is_object($add)) {
+                $collection->set($add->getType(), $add);
+            } else {
+                $collection->set($add['address_id'], new Address($add));
             }
         }
 
         return $collection;
     }
 
+    /**
+     * Get address
+     *
+     * @return array
+     */
+    public function getAddressByType($type)
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return isset($this->address[$type])?$this->address[$type]:null;
+    }
+
     public function addAddres($address)
     {
 
-        if($address->getAddressId()){
+        if ($address->getAddressId()) {
 
             $this->address[$address->getType()] = $address->toArray();
             $this->setAddress($this->address);

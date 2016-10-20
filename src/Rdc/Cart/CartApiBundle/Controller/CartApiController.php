@@ -718,7 +718,6 @@ class CartApiController extends FOSRestController
     public function putOrderNotifiedAction(Request $request, Cart $cart)
     {
         try {
-
             $this->getCartBusiness()->notify($cart);
             $view = $this->view(['success' => true], 200);
 
@@ -792,10 +791,10 @@ class CartApiController extends FOSRestController
             $view = $this->view($cart, 200);
 
         } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
+            $view = $this->view($form, 406);
         } catch (\Exception $exception) {
             $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $view = $this->view($data, 406);
         }
 
         return $this->handleView($view);
