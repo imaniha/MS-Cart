@@ -1,7 +1,6 @@
 <?php
 namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator;
 
-use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\AbstractMultiAddressCartValidator;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
@@ -38,6 +37,7 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
         foreach ($this->getBehavior() as $source => $behavior) {
             //check if addressId exist
             if(!$this->getCart()->getAddressByType(static::TYPE) || $source != $this->getCart()->getAddressByType(static::TYPE)['address_id']){
+
                 throw new BehaviorException(sprintf('Invalid Behavior: Address %d does not exist', $source));
             }
 

@@ -15,14 +15,23 @@ class CartAddressType extends AbstractType
     {
         $builder
             ->add(
-            'address',
-            CollectionType::class,
-            array(
-                'entry_type' => AddressType::class,
-                'allow_add' => true,
-                'by_reference' => false,
+                'address',
+                CollectionType::class,
+                array(
+                    'entry_type' => AddressType::class,
+                    'allow_add' => true,
+                    'by_reference' => false,
+                )
             )
-        );
+            ->add(
+                'behaviors',
+                CollectionType::class,
+                array(
+                    'entry_type' => BehaviorType::class,
+                    'allow_add' => true,
+                    'by_reference' => false
+                )
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
