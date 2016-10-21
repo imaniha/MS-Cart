@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Vo\Customer;
@@ -154,7 +155,7 @@ class Cart
     }
 
     /**
-    /**
+     * /**
      * Get shopId
      *
      * @return integer
@@ -323,7 +324,7 @@ class Cart
             if (is_object($behavior)) {
                 $collection->add($behavior);
             } else {
-                foreach($behavior as $source){
+                foreach ($behavior as $source) {
                     $collection->add(new Behavior($source));
                 }
 
@@ -341,7 +342,7 @@ class Cart
     public function getBehaviorsByType($type)
     {
 
-        return isset($this->behaviors[$type])?$this->behaviors[$type]:null;
+        return isset($this->behaviors[$type]) ? $this->behaviors[$type] : null;
     }
 
     public function addBehavior($behavior)
@@ -351,7 +352,10 @@ class Cart
             if (isset($this->behaviors[$behavior->getType()])
                 && isset($this->behaviors[$behavior->getType()][$behavior->getSource()])
             ) {
-                $target = array_merge($this->behaviors[$behavior->getType()][$behavior->getSource()]['target'], $behavior->getTarget());
+                $target = array_merge(
+                    $this->behaviors[$behavior->getType()][$behavior->getSource()]['target'],
+                    $behavior->getTarget()
+                );
                 $target = array_unique($target);
                 $target = array_values($target);
                 $behavior->setTarget($target);
@@ -441,11 +445,13 @@ class Cart
 
         $collection = new ArrayCollection();
 
-        foreach ($this->address as $add) {
-            if (is_object($add)) {
-                $collection->set($add->getType(), $add);
-            } else {
-                $collection->set($add['address_id'], new Address($add));
+        foreach ($this->address as $type) {
+            foreach ($type as $add) {
+                if (is_object($add)) {
+                    $collection->add($add);
+                } else {
+                    $collection->add(new Address($add));
+                }
             }
         }
 
@@ -463,7 +469,7 @@ class Cart
             return null;
         }
 
-        return isset($this->address[$type])?$this->address[$type]:null;
+        return isset($this->address[$type]) ? $this->address[$type] : null;
     }
 
     public function addAddres($address)
@@ -471,7 +477,7 @@ class Cart
 
         if ($address->getAddressId()) {
 
-            $this->address[$address->getType()] = $address->toArray();
+            $this->address[$address->getType()][$address->getAddressId()] = $address->toArray();
             $this->setAddress($this->address);
         }
 

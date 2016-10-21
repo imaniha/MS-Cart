@@ -9,7 +9,6 @@ use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
 class MultiAddressBillingCartValidator extends AbstractMultiAddressCartValidator
 {
-
     const TYPE = 'billing';
 
     public function __construct(Cart $cart)
@@ -18,6 +17,5 @@ class MultiAddressBillingCartValidator extends AbstractMultiAddressCartValidator
         $this->setItems($cart->getItemsAsArray());
         $this->setBehavior($cart->getBehaviorsByType('MultiAddressBillingCart'));
     }
-
 }
 

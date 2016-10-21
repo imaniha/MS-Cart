@@ -9,7 +9,6 @@ use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
 class MultiAddressShippingCartValidator extends AbstractMultiAddressCartValidator
 {
-
     const TYPE = 'shipping';
 
     public function __construct(Cart $cart)
@@ -17,6 +16,4 @@ class MultiAddressShippingCartValidator extends AbstractMultiAddressCartValidato
         parent::__construct($cart);
         $this->setBehavior($cart->getBehaviorsByType('MultiAddressDeliveryCart'));
     }
-
 }
-

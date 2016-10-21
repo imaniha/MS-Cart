@@ -16,5 +16,4 @@ class MultiAddressDeliveryCartValidator extends AbstractMultiAddressCartValidato
         parent::__construct($cart);
         $this->setBehavior($cart->getBehaviorsByType('MultiAddressDeliveryCart'));
     }
-
 }

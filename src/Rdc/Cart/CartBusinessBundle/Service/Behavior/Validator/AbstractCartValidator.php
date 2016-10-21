@@ -31,8 +31,5 @@ Abstract class AbstractCartValidator
         $this->cart = $cart;
     }
 
-
-
     abstract function validate();
-
 }

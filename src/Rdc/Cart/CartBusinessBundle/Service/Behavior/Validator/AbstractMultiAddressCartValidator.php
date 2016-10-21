@@ -28,26 +28,23 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
     {
         parent::__construct($cart);
         $this->setCart($cart);
-        $this->setAddress($cart->getAddress());
+        $this->setAddress($cart->getAddressByType(static::TYPE));
     }
 
     public function validate()
     {
 
         foreach ($this->getBehavior() as $source => $behavior) {
-            //check if addressId exist
-            if(!$this->getCart()->getAddressByType(static::TYPE) || $source != $this->getCart()->getAddressByType(static::TYPE)['address_id']){
 
-                throw new BehaviorException(sprintf('Invalid Behavior: Address %d does not exist', $source));
-            }
+            //check if addressId exist
+            $this->checkAddress($source);
 
             $behavior = new Behavior($behavior);
             foreach ($behavior->getTarget() as $target) {
 
                 //check if item exist
-                if(!isset($this->getItems()[$target])){
-                    throw new BehaviorException(sprintf('Invalid Behavior: Item %d does not exist', $target));
-                }
+                $this->checkItem($target);
+
 
                 !isset($tmp_array[$behavior->getType()]) ? $tmp_array[$behavior->getType()] = array() : '';
                 !isset($tmp_array[$behavior->getType()][$target]) ? $tmp_array[$behavior->getType()][$target] = 0 : '';
@@ -109,6 +106,34 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
     public function setBehavior($behavior)
     {
         $this->behavior = $behavior;
+    }
+
+    /**
+     * @return Void the provided address exist
+     * @throws BehaviorException if the provided address is not found
+     */
+    public function checkAddress($addressId)
+    {
+        if (!$this->getAddress() || !isset($this->getAddress()[$addressId])) {
+
+            throw new BehaviorException(sprintf('Invalid Behavior: Address %d does not exist', $addressId));
+        }
+
+        return;
+    }
+
+    /**
+     * @return Void the provided item exist
+     * @throws BehaviorException if the provided item is not found
+     */
+    public function checkItem($itemId)
+    {
+        if (!$this->getItems() || !isset($this->getItems()[$itemId])) {
+
+            throw new BehaviorException(sprintf('Invalid Behavior: Item %d does not exist', $itemId));
+        }
+
+        return;
     }
 
 }
