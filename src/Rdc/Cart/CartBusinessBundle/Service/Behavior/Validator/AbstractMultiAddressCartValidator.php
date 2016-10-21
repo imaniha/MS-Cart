@@ -27,7 +27,6 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
     public function __construct($cart)
     {
         parent::__construct($cart);
-        $this->setCart($cart);
         $this->setAddress($cart->getAddressByType(static::TYPE));
     }
 
@@ -45,11 +44,9 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
                 //check if item exist
                 $this->checkItem($target);
 
-
                 !isset($tmp_array[$behavior->getType()]) ? $tmp_array[$behavior->getType()] = array() : '';
                 !isset($tmp_array[$behavior->getType()][$target]) ? $tmp_array[$behavior->getType()][$target] = 0 : '';
                 $tmp_array[$behavior->getType()][$target] += 1;
-
 
                 if ($tmp_array[$behavior->getType()][$target] > 1) {
                     throw new BehaviorException(sprintf('Invalid Behavior: Item %d as several Addresses', $target));

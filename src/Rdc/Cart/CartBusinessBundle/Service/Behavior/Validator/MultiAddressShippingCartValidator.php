@@ -14,6 +14,7 @@ class MultiAddressShippingCartValidator extends AbstractMultiAddressCartValidato
     public function __construct(Cart $cart)
     {
         parent::__construct($cart);
-        $this->setBehavior($cart->getBehaviorsByType('MultiAddressDeliveryCart'));
+        $this->setItems($cart->getItemsAsArray());
+        $this->setBehavior($cart->getBehaviorsByType('MultiAddressShippingCart'));
     }
 }
