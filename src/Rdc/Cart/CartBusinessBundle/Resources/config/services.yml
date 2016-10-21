@@ -9,8 +9,13 @@ services:
     address.business:
         class: Rdc\Cart\CartBusinessBundle\Service\AddressBusiness
 
+    multi.validator.factory:
+        class: Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory\MultiValidatorFactory
+
     cart.behavior.listener:
         class: Rdc\Cart\CartBusinessBundle\Service\Behavior\EventListener\BehaviorValidator
-        arguments: ['@validator']
+        arguments: ['@validator', '@multi.validator.factory']
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
+
+
