@@ -1,0 +1,4 @@
+services:
+#    stub_cart.example:
+#        class: Stub\StubCartBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
