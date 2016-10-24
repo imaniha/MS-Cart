@@ -21,7 +21,6 @@ class BehaviorValidator
 
     public function preUpdate(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Cart) {
@@ -32,7 +31,6 @@ class BehaviorValidator
             $behaviors = $args->getNewValue('behaviors');
             foreach ($behaviors as $type => $behavior) {
                 $behaviorValidator = $this->multiValidatorFactory->get($type, $entity);
-
                 $behaviorValidator->validate();
             }
         }

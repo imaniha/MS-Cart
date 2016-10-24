@@ -28,6 +28,7 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
     {
         parent::__construct($cart);
         $this->setAddress($cart->getAddressByType(static::TYPE));
+        $this->setBehavior($cart->getBehaviorsByType(static::TYPE));
     }
 
     public function validate()

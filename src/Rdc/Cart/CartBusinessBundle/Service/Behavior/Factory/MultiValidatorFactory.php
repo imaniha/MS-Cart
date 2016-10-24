@@ -2,6 +2,7 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory;
 
+use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressBillingCartValidator;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressDeliveryCartValidator;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressShippingCartValidator;
@@ -17,21 +18,21 @@ class MultiValidatorFactory
      *
      * @return LoggerInterface Logger instance
      */
-    static public function get($type, $cart)
+    static public function get($type, Cart $cart)
     {
         $instance = null;
 
         switch ($type) {
 
-            case 'MultiAddressShippingCart':
+            case 'shipping':
                 $instance = new MultiAddressShippingCartValidator($cart);
                 break;
 
-            case 'MultiAddressDeliveryCart':
+            case 'delivery':
                 $instance = new MultiAddressDeliveryCartValidator($cart);
                 break;
 
-            case 'MultiAddressBillingCart':
+            case 'billing':
                 $instance = new MultiAddressBillingCartValidator($cart);
                 break;
 

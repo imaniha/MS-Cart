@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\VirtualProperty;
+use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Expose;
 
 use Rdc\Cart\CartBusinessBundle\Vo\Address;
@@ -64,7 +66,6 @@ class Cart
 
     /**
      * @var array
-     * @Expose
      */
     private $items = [];
 
@@ -111,9 +112,31 @@ class Cart
     private $promotion;
 
     /**
+     * @VirtualProperty
+     * @SerializedName("items")
+     *
+     * @return string
+     */
+    public function getItemsBehavior()
+    {
+        foreach ($this->behaviors as $type=>$behaviors) {
+            foreach ($this->items as &$item) {
+                foreach ($behaviors as $behavior) {
+                    if (in_array($item['item_id'], $behavior['target'])) {
+                        $item[$type.'_address'] = $behavior['source'];
+                    }
+                }
+            }
+        }
+
+        return $this->items;
+    }
+
+    /**
      * @return int
      */
-    public function getCartId()
+    public
+    function getCartId()
     {
         return $this->cart_id;
     }
@@ -121,7 +144,8 @@ class Cart
     /**
      * @return array
      */
-    public function getPromotion()
+    public
+    function getPromotion()
     {
         $return = [];
         foreach ($this->promotion as $promotion) {
@@ -134,8 +158,10 @@ class Cart
     /**
      * @param $promotion
      */
-    public function setPromotion($promotion)
-    {
+    public
+    function setPromotion(
+        $promotion
+    ) {
         foreach ($promotion as $promo) {
             $this->promotion[] = $promo->toArray();
         }
@@ -147,8 +173,10 @@ class Cart
      * @param integer $shopId
      * @return Cart
      */
-    public function setShopId($shopId)
-    {
+    public
+    function setShopId(
+        $shopId
+    ) {
         $this->shopId = $shopId;
 
         return $this;
@@ -160,7 +188,8 @@ class Cart
      *
      * @return integer
      */
-    public function getShopId()
+    public
+    function getShopId()
     {
         return $this->shopId;
     }
@@ -171,8 +200,10 @@ class Cart
      * @param string $channel
      * @return Cart
      */
-    public function setChannel($channel)
-    {
+    public
+    function setChannel(
+        $channel
+    ) {
         $this->channel = $channel;
 
         return $this;
@@ -183,7 +214,8 @@ class Cart
      *
      * @return string
      */
-    public function getChannel()
+    public
+    function getChannel()
     {
         return $this->channel;
     }
@@ -194,8 +226,10 @@ class Cart
      * @param string $status
      * @return Cart
      */
-    public function setStatus($status)
-    {
+    public
+    function setStatus(
+        $status
+    ) {
         $this->status = $status;
 
         return $this;
@@ -206,7 +240,8 @@ class Cart
      *
      * @return string
      */
-    public function getStatus()
+    public
+    function getStatus()
     {
         return $this->status;
     }
@@ -214,7 +249,8 @@ class Cart
     /**
      * @return boolean
      */
-    public function isNotified()
+    public
+    function isNotified()
     {
         return $this->notified;
     }
@@ -222,8 +258,10 @@ class Cart
     /**
      * @param boolean $notified
      */
-    public function setNotified($notified)
-    {
+    public
+    function setNotified(
+        $notified
+    ) {
         $this->notified = $notified;
     }
 
@@ -234,8 +272,10 @@ class Cart
      * @param array $items
      * @return Cart
      */
-    public function setItems($items)
-    {
+    public
+    function setItems(
+        $items
+    ) {
         $this->items = $items;
 
         return $this;
@@ -246,7 +286,8 @@ class Cart
      *
      * @return array
      */
-    public function getItems()
+    public
+    function getItems()
     {
         if (null === $this->items) {
             return null;
@@ -270,14 +311,17 @@ class Cart
      *
      * @return array
      */
-    public function getItemsAsArray()
+    public
+    function getItemsAsArray()
     {
 
         return $this->items;
     }
 
-    public function addItem($item)
-    {
+    public
+    function addItem(
+        $item
+    ) {
         if ($item->getItemId()) {
             $this->items[$item->getItemId()] = $item->toArray();
             $this->setItems($this->items);
@@ -286,8 +330,10 @@ class Cart
         return $this;
     }
 
-    public function removeItem($item)
-    {
+    public
+    function removeItem(
+        $item
+    ) {
 
         return $this;
     }
@@ -299,8 +345,10 @@ class Cart
      * @param array $behavior
      * @return Cart
      */
-    public function setBehaviors($behaviors)
-    {
+    public
+    function setBehaviors(
+        $behaviors
+    ) {
 
         $this->behaviors = $behaviors;
 
@@ -312,7 +360,8 @@ class Cart
      *
      * @return array
      */
-    public function getBehaviors()
+    public
+    function getBehaviors()
     {
         if (null === $this->behaviors) {
             return null;
@@ -339,37 +388,51 @@ class Cart
      *
      * @return array
      */
-    public function getBehaviorsByType($type)
-    {
+    public
+    function getBehaviorsByType(
+        $type
+    ) {
 
         return isset($this->behaviors[$type]) ? $this->behaviors[$type] : null;
     }
 
-    public function addBehavior($behavior)
-    {
+    public
+    function addBehavior(
+        $behavior
+    ) {
 
         if ($behavior->getType()) {
-            if (isset($this->behaviors[$behavior->getType()])
-                && isset($this->behaviors[$behavior->getType()][$behavior->getSource()])
-            ) {
-                $target = array_merge(
-                    $this->behaviors[$behavior->getType()][$behavior->getSource()]['target'],
-                    $behavior->getTarget()
-                );
-                $target = array_unique($target);
-                $target = array_values($target);
-                $behavior->setTarget($target);
-            }
+
+
+            /*
+             if (isset($this->behaviors[$behavior->getType()])
+                 && isset($this->behaviors[$behavior->getType()][$behavior->getSource()])
+             ) {
+                 $target = array_merge(
+                     $this->behaviors[$behavior->getType()][$behavior->getSource()]['target'],
+                     $behavior->getTarget()
+                 );
+                 $target = array_unique($target);
+                 $target = array_values($target);
+                 $behavior->setTarget($target);
+             }
+             */
+
+
             $this->behaviors[$behavior->getType()][$behavior->getSource()] = $behavior->toArray();
 
             $this->setBehaviors($this->behaviors);
+
+
         }
 
         return $this;
     }
 
-    public function removeBehavior($behaviors)
-    {
+    public
+    function removeBehavior(
+        $behaviors
+    ) {
         //$this->behaviors[] = $behaviors;
 
         return $this;
@@ -380,8 +443,10 @@ class Cart
      *
      * @param \Rdc\Cart\CartBusinessBundle\Entity\Customer $customer
      */
-    public function setCustomer(Customer $customer)
-    {
+    public
+    function setCustomer(
+        Customer $customer
+    ) {
         $this->customer = $customer->toArray();
     }
 
@@ -390,7 +455,8 @@ class Cart
      *
      * @return \Rdc\Cart\CartBusinessBundle\Entity\Customer
      */
-    public function getCustomer()
+    public
+    function getCustomer()
     {
 
         return ($this->customer ? new Customer($this->customer) : null);
@@ -402,8 +468,10 @@ class Cart
      * @param array $additionalData
      * @return Cart
      */
-    public function setAdditionalData($additionalData)
-    {
+    public
+    function setAdditionalData(
+        $additionalData
+    ) {
         $this->additionalData = $additionalData;
 
         return $this;
@@ -414,7 +482,8 @@ class Cart
      *
      * @return array
      */
-    public function getAdditionalData()
+    public
+    function getAdditionalData()
     {
         return $this->additionalData;
     }
@@ -425,8 +494,10 @@ class Cart
      * @param array $address
      * @return Cart
      */
-    public function setAddress($address)
-    {
+    public
+    function setAddress(
+        $address
+    ) {
         $this->address = $address;
 
         return $this;
@@ -437,7 +508,8 @@ class Cart
      *
      * @return array
      */
-    public function getAddress()
+    public
+    function getAddress()
     {
         if (null === $this->address) {
             return null;
@@ -463,8 +535,10 @@ class Cart
      *
      * @return array
      */
-    public function getAddressByType($type)
-    {
+    public
+    function getAddressByType(
+        $type
+    ) {
         if (null === $this->address) {
             return null;
         }
@@ -472,8 +546,10 @@ class Cart
         return isset($this->address[$type]) ? $this->address[$type] : null;
     }
 
-    public function addAddres($address)
-    {
+    public
+    function addAddres(
+        $address
+    ) {
 
         if ($address->getAddressId()) {
 
@@ -484,8 +560,10 @@ class Cart
         return $this;
     }
 
-    public function removeAddres($address)
-    {
+    public
+    function removeAddres(
+        $address
+    ) {
 
         return $this;
     }
@@ -493,7 +571,8 @@ class Cart
     /**
      * @return \Rdc\Cart\CartBusinessBundle\Entity\Payment
      */
-    public function getPayment()
+    public
+    function getPayment()
     {
 
         return ($this->payment ? new Payment($this->payment) : null);
@@ -502,15 +581,18 @@ class Cart
     /**
      * @param \Rdc\Cart\CartBusinessBundle\Entity\Payment $payment
      */
-    public function setPayment($payment)
-    {
+    public
+    function setPayment(
+        $payment
+    ) {
         $this->payment = $payment->toArray();
     }
 
     /**
      * @return \Rdc\Cart\CartBusinessBundle\Entity\Shipping
      */
-    public function getShipping()
+    public
+    function getShipping()
     {
 
         return ($this->shipping ? new Shipping($this->shipping) : null);
@@ -519,8 +601,10 @@ class Cart
     /**
      * @param \Rdc\Cart\CartBusinessBundle\Entity\Shipping $shipping
      */
-    public function setShipping($shipping)
-    {
+    public
+    function setShipping(
+        $shipping
+    ) {
         $this->shipping = $shipping->toArray();
     }
 }

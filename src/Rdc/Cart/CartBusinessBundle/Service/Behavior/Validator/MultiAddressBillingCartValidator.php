@@ -15,7 +15,6 @@ class MultiAddressBillingCartValidator extends AbstractMultiAddressCartValidator
     {
         parent::__construct($cart);
         $this->setItems($cart->getItemsAsArray());
-        $this->setBehavior($cart->getBehaviorsByType('MultiAddressBillingCart'));
     }
 }
 
