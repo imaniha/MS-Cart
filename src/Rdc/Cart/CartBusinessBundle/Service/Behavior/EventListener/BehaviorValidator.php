@@ -21,6 +21,7 @@ class BehaviorValidator
 
     public function preUpdate(LifecycleEventArgs $args)
     {
+        return;
         $entity = $args->getEntity();
 
         if (!$entity instanceof Cart) {

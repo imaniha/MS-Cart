@@ -2,14 +2,14 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator;
 
-use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\AbstractMultiAddressCartValidator;
+use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\AbstractMultiShippingCartValidator;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
-class MultiAddressDeliveryCartValidator extends AbstractMultiAddressCartValidator
+class MultiShippingTypeCartValidator extends AbstractMultiAddressCartValidator
 {
-    const TYPE = 'delivery';
+    const TYPE = 'shipping_type';
 
     public function __construct(Cart $cart)
     {

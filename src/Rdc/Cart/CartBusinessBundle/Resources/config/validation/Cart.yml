@@ -4,8 +4,8 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - Valid: { traverse: true }
         customer:
             - Valid: ~
-        shipping:
-            - Valid: ~
+        shippings:
+            - Valid: { traverse: true }
         payment:
             - Valid: ~
         items:
@@ -25,7 +25,5 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - NotBlank: ~
             - Type:
                 type: string
-
         behaviors:
             - Type: array
-

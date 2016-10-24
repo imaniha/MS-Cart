@@ -32,6 +32,6 @@ class ShippingType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'payment';
+        return 'shipping';
     }
 }

@@ -4,8 +4,8 @@ namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory;
 
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressBillingCartValidator;
-use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressDeliveryCartValidator;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiAddressShippingCartValidator;
+use Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator\MultiShippingTypeCartValidator;
 
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BadMultiValidatorDefinitionException;
 
@@ -24,16 +24,14 @@ class MultiValidatorFactory
 
         switch ($type) {
 
-            case 'shipping':
+            case 'shipping_address':
                 $instance = new MultiAddressShippingCartValidator($cart);
                 break;
-
-            case 'delivery':
-                $instance = new MultiAddressDeliveryCartValidator($cart);
-                break;
-
-            case 'billing':
+            case 'billing_address':
                 $instance = new MultiAddressBillingCartValidator($cart);
+                break;
+            case 'shipping_type':
+                $instance = new MultiShippingTypeCartValidator($cart);
                 break;
 
             default:

@@ -9,7 +9,7 @@ use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
 class MultiAddressBillingCartValidator extends AbstractMultiAddressCartValidator
 {
-    const TYPE = 'billing';
+    const TYPE = 'billing_address';
 
     public function __construct(Cart $cart)
     {

@@ -528,7 +528,6 @@ class CartApiController extends FOSRestController
     public function addShippingAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartShippingType::class, $cart);
-
         $form->handleRequest($request);
 
         try {
