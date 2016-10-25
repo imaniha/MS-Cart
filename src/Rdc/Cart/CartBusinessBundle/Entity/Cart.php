@@ -128,7 +128,7 @@ class Cart
             foreach ($this->items as &$item) {
                 foreach ($behaviors as $behavior) {
                     if (in_array($item['item_id'], $behavior['target'])) {
-                        $item[$type.'_address'] = $behavior['source'];
+                        $item[$type.'_id'] = $behavior['source'];
                     }
                 }
             }
