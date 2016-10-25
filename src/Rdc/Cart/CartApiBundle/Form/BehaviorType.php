@@ -18,15 +18,6 @@ class BehaviorType extends AbstractType
             ->add('type', TextType::class)
             ->add('source', IntegerType::class)
             ->add('target', TextType::class);
-//            ->add(
-//            'target',
-//            CollectionType::class,
-//            array(
-//                'entry_type' => IntegerType::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//            )
-      //  );
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -35,7 +26,7 @@ class BehaviorType extends AbstractType
             [
                 'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Behavior',
                 'csrf_protection' => false,
-                'allow_extra_fields' => true
+                'allow_extra_fields' => true,
             ]
         );
     }
