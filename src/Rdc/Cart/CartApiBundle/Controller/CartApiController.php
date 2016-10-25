@@ -86,7 +86,7 @@ class CartApiController extends FOSRestController
      *
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  },
      *
@@ -135,7 +135,7 @@ class CartApiController extends FOSRestController
      *  section="Cart",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -192,7 +192,7 @@ class CartApiController extends FOSRestController
      *  section="Customer",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -261,7 +261,7 @@ class CartApiController extends FOSRestController
      *  section="Item",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -305,7 +305,7 @@ class CartApiController extends FOSRestController
      *  section="Cart",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -359,7 +359,6 @@ class CartApiController extends FOSRestController
      *
      *  input={
      *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Address",
-     *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
      *       }
@@ -373,7 +372,7 @@ class CartApiController extends FOSRestController
      *  section="Address",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -388,7 +387,6 @@ class CartApiController extends FOSRestController
 
         try {
             $this->validateForm($form);
-
             $cart = $this->getCartBusiness()->createCart($cart);
             $view = $this->view($cart, 200);
 
@@ -448,7 +446,7 @@ class CartApiController extends FOSRestController
      *  section="Payment",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -483,7 +481,7 @@ class CartApiController extends FOSRestController
      *<pre>
      * {
      *   "cart":{
-     *     "shipping": {
+     *     "shippings": [{
      *       "type_id": 73715780,
      *       "type_name": "Livraison express à domicile par Chronopost",
      *       "additional_data": {
@@ -491,7 +489,7 @@ class CartApiController extends FOSRestController
      *           "shipping_method_amount": 10.20,
      *           "shipping_method_delivery_id": "4-BE-Livraison express à domicile par Chronopost"
      *       }
-     *     }
+     *     }]
      *   }
      * }
      *</pre>
@@ -518,7 +516,7 @@ class CartApiController extends FOSRestController
      *  section="Shipping",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -528,6 +526,7 @@ class CartApiController extends FOSRestController
     public function addShippingAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartShippingType::class, $cart);
+
         $form->handleRequest($request);
 
         try {
@@ -622,7 +621,7 @@ class CartApiController extends FOSRestController
      *  section="Cart Promotion",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -675,7 +674,7 @@ class CartApiController extends FOSRestController
      *  section="Order",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -707,7 +706,7 @@ class CartApiController extends FOSRestController
      *  section="Order",
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  }
      * )
@@ -736,7 +735,7 @@ class CartApiController extends FOSRestController
      * {
      *   "cart":{
      *     "behaviors": [{
-     *         "type": "MultiAddressCart",
+     *         "type": "shipping_address",
      *         "source": 1,
      *         "target": [1,2]
      *  }]
@@ -749,10 +748,9 @@ class CartApiController extends FOSRestController
      * @ApiDoc(
      *
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
-     *       "groups"={"nelmio"},
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Behavior",
      *       "parsers"={
-     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
      *       }
      *     },
      *  output={
@@ -767,7 +765,7 @@ class CartApiController extends FOSRestController
      *
      *  statusCodes={
      *      200="Returned when successful",
-     *      400="Returned when the url is malformed",
+     *      400="Returned when a business exception occurred",
      *      500="Returned when a technical error occurs, request must be retry"
      *  },
      *
@@ -776,11 +774,9 @@ class CartApiController extends FOSRestController
      * @return array
      */
 
-    public function postBehaviorAction(Request $request, Cart $cart)
+    public function addBehaviorAction(Request $request, Cart $cart)
     {
-
         $form = $this->createForm(CartBehaviorType::class, $cart);
-
         $form->handleRequest($request);
 
         try {

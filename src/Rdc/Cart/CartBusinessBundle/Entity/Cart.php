@@ -404,28 +404,8 @@ class Cart
     {
 
         if ($behavior->getType()) {
-
-
-            /*
-             if (isset($this->behaviors[$behavior->getType()])
-                 && isset($this->behaviors[$behavior->getType()][$behavior->getSource()])
-             ) {
-                 $target = array_merge(
-                     $this->behaviors[$behavior->getType()][$behavior->getSource()]['target'],
-                     $behavior->getTarget()
-                 );
-                 $target = array_unique($target);
-                 $target = array_values($target);
-                 $behavior->setTarget($target);
-             }
-             */
-
-
             $this->behaviors[$behavior->getType()][$behavior->getSource()] = $behavior->toArray();
-
             $this->setBehaviors($this->behaviors);
-
-
         }
 
         return $this;
