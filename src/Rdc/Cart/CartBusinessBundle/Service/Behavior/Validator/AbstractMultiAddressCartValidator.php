@@ -119,19 +119,4 @@ Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
 
         return;
     }
-
-    /**
-     * @return Void the provided item exist
-     * @throws BehaviorException if the provided item is not found
-     */
-    public function checkItem($itemId)
-    {
-        if (!$this->getItems() || !isset($this->getItems()[$itemId])) {
-
-            throw new BehaviorException(sprintf('Invalid Behavior: Item %d does not exist', $itemId));
-        }
-
-        return;
-    }
-
 }

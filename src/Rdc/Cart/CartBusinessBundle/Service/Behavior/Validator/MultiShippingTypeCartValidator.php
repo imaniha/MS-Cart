@@ -7,7 +7,7 @@ use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
-class MultiShippingTypeCartValidator extends AbstractMultiAddressCartValidator
+class MultiShippingTypeCartValidator extends AbstractMultiShippingCartValidator
 {
     const TYPE = 'shipping_type';
 

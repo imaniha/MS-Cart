@@ -2,6 +2,7 @@
 namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator;
 
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
+use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
 Abstract class AbstractCartValidator
 {
@@ -29,6 +30,20 @@ Abstract class AbstractCartValidator
     public function setCart(Cart $cart)
     {
         $this->cart = $cart;
+    }
+
+    /**
+     * @return Void the provided item exist
+     * @throws BehaviorException if the provided item is not found
+     */
+    public function checkItem($itemId)
+    {
+        if (!$this->getItems() || !isset($this->getItems()[$itemId])) {
+
+            throw new BehaviorException(sprintf('Invalid Behavior: Item %d does not exist', $itemId));
+        }
+
+        return;
     }
 
     abstract function validate();

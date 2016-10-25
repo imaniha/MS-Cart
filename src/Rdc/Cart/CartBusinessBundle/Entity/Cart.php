@@ -114,7 +114,7 @@ class Cart
 
     /**
      * @VirtualProperty
-     * @SerializedName("items2")
+     * @SerializedName("items")
      *
      * @return string
      */
@@ -341,7 +341,7 @@ class Cart
         return $this;
     }
 
-    public function removeItem()
+    public function removeItem($item)
     {
 
         return $this;
@@ -619,22 +619,17 @@ class Cart
 
     public function addShipping($shipping)
     {
-        echo 'test';
-        die;
         if ($shipping->getTypeId()) {
-            die;
             $this->shippings[$shipping->getTypeId()] = $shipping->toArray();
-            $this->getTypeId($this->shippings);
+            $this->setShippings($this->shippings);
         }
 
         return $this;
     }
 
 
-    public function removeShipping()
+    public function removeShipping($shipping)
     {
-        echo 'delete';
-        die;
 
         return $this;
     }

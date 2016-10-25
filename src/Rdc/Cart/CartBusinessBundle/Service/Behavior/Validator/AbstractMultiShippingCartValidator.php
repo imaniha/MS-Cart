@@ -27,17 +27,16 @@ Abstract class AbstractMultiShippingCartValidator extends AbstractCartValidator
     public function __construct($cart)
     {
         parent::__construct($cart);
-        $this->setShipping($cart->getShipping());
+        $this->setShipping($cart->getShippingsAsArray());
         $this->setBehavior($cart->getBehaviorsByType(static::TYPE));
     }
 
     public function validate()
     {
-return;
         foreach ($this->getBehavior() as $source => $behavior) {
-die;
-            //check if addressId exist
-            $this->checkAddress($source);
+
+            //check if shippingType exist
+            $this->checkShipping($source);
 
             $behavior = new Behavior($behavior);
             foreach ($behavior->getTarget() as $target) {
@@ -110,28 +109,13 @@ die;
      * @return Void the provided address exist
      * @throws BehaviorException if the provided address is not found
      */
-    public function checkAddress($addressId)
+    public function checkShipping($shippingId)
     {
-        if (!$this->getAddress() || !isset($this->getAddress()[$addressId])) {
+        if (!$this->getShipping() || !isset($this->getShipping()[$shippingId])) {
 
-            throw new BehaviorException(sprintf('Invalid Behavior: Address %d does not exist', $addressId));
+            throw new BehaviorException(sprintf('Invalid Behavior: Shipping %d does not exist', $shippingId));
         }
 
         return;
     }
-
-    /**
-     * @return Void the provided item exist
-     * @throws BehaviorException if the provided item is not found
-     */
-    public function checkItem($itemId)
-    {
-        if (!$this->getItems() || !isset($this->getItems()[$itemId])) {
-
-            throw new BehaviorException(sprintf('Invalid Behavior: Item %d does not exist', $itemId));
-        }
-
-        return;
-    }
-
 }
