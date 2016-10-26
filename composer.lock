@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6ed35d977c959fa78338a1cb49343276",
-    "content-hash": "10e70b6f6622f75605b3a0643d4e4540",
+    "hash": "796eae94b24134b4b50eed4e721db990",
+    "content-hash": "a5d8c5750548f4b3464a7c9634fa43e5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1649,6 +1649,42 @@
             "time": "2016-09-19 16:02:08"
         },
         {
+            "name": "rdc/rdc-middle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.rueducommerce.fr/rdc-dev/RdcMidBundle.git",
+                "reference": "0a7ab8f40ac6fa432a7b1c2e4083ab00d3ee2cdc"
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/symfony": "3.1.*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "classmap": []
+            },
+            "autoload-dev": {
+                "psr-4": []
+            },
+            "scripts": {
+                "post-install-cmd": [
+                    "@symfony-scripts"
+                ],
+                "post-update-cmd": [
+                    "@symfony-scripts"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "The common bundle",
+            "time": "2016-10-21 14:28:29"
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "v5.0.12",
             "source": {
@@ -2719,7 +2755,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rdc/rdc-middle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
