@@ -5,7 +5,7 @@ use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
-Abstract class AbstractMultiAddressCartValidator extends AbstractCartValidator
+Abstract class AbstractAddressCartBehaviorValidator extends AbstractCartBehaviorValidator
 {
     const TYPE = '';
 

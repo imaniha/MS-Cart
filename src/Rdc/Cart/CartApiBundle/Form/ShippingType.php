@@ -16,6 +16,8 @@ class ShippingType extends AbstractType
         $builder
             ->add('type_id', IntegerType::class)
             ->add('type_name', TextType::class)
+            ->add('items', TextType::class, array('mapped' => false))
+            ->add('stores', TextType::class, array('mapped' => false))
             ->add('additional_data', TextType::class);
     }
 

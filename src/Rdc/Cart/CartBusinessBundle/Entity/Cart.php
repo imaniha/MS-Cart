@@ -96,7 +96,6 @@ class Cart
 
     /**
      * @var array
-     * @Expose
      */
     private $behaviors;
 
@@ -121,17 +120,10 @@ class Cart
     public function getItemsBehavior()
     {
         if (null === $this->behaviors) {
-            return null;
+            return $this->items;
         }
-
-        foreach ($this->behaviors as $type => $behaviors) {
-            foreach ($this->items as &$item) {
-                foreach ($behaviors as $behavior) {
-                    if (in_array($item['item_id'], $behavior['target'])) {
-                        $item[$type.'_id'] = $behavior['source'];
-                    }
-                }
-            }
+        foreach ($this->items as &$item) {
+            $item = $this->behaviorResolver($item);
         }
 
         return $this->items;
@@ -329,6 +321,24 @@ class Cart
     {
 
         return $this->items;
+    }
+
+    /**
+     * Get itemsStoresId
+     *
+     * @return array
+     */
+    public function getItemsStoresId()
+    {
+        $stores = [];
+        foreach ($this->items as $item) {
+
+            if (isset($item['store_id'])) {
+                $stores[$item['store_id']][] = $item;
+            }
+        }
+
+        return $stores;
     }
 
     public function addItem($item)
@@ -612,5 +622,34 @@ class Cart
     {
 
         return $this;
+    }
+
+    private function behaviorResolver($item)
+    {
+        $behaviorFields = [
+            'billing_address' => 'billing_address_id',
+            'shipping_address' => 'shipping_address_id',
+            'shipping_type_item' => 'shipping_id',
+            'shipping_type_store' => 'shipping_id',
+        ];
+
+        foreach ($behaviorFields as $type => $field) {
+            $default_address_id = null;
+            if ((isset($this->behaviors[$type]) && (null !== $behaviors = $this->behaviors[$type])) && !isset($item[$type])) {
+                foreach ($behaviors as $behavior) {
+                    if (count($behavior['target']) == 0) {
+                        $default_address_id = $behavior['source'];
+                    }
+                    if (in_array($item['item_id'], $behavior['target'])) {
+                        $item[$type] = $behavior['source'];
+                    }
+                }
+            }
+            if (!isset($item[$type])) {
+                $item[$type] = $default_address_id;
+            }
+        }
+
+        return $item;
     }
 }

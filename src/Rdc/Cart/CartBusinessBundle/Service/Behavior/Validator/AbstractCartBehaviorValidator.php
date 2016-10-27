@@ -4,7 +4,7 @@ namespace Rdc\Cart\CartBusinessBundle\Service\Behavior\Validator;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
-Abstract class AbstractCartValidator
+Abstract class AbstractCartBehaviorValidator
 {
     /**
      * @var Cart

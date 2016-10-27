@@ -230,6 +230,7 @@ class CartApiController extends FOSRestController
      *    "items": [{
      *      "item_id": 3,
      *      "quantity": 3,
+     *      "store_id": 5,
      *      "additional_data": {
      *        "extra1": "data extra1",
      *        "extra2": "data extra2"
@@ -328,7 +329,7 @@ class CartApiController extends FOSRestController
      *   "cart":{
      *     "address": [{
      *       "address_id": 1,
-     *       "type": "billing",
+     *       "type": "billing_address",
      *       "firstname": "Nicolas",
      *       "lastname": "Rozen",
      *       "address1": "12 rue roger poncelet",
@@ -342,6 +343,7 @@ class CartApiController extends FOSRestController
      *       "fax": "",
      *       "rcs": "",
      *       "access_code": "",
+     *       "items": [{"id":1}, {"id": 2}],
      *       "additional_data": {
      *           "extra1": "data extra1",
      *           "extra2": "data extra2"
@@ -484,6 +486,8 @@ class CartApiController extends FOSRestController
      *     "shippings": [{
      *       "type_id": 73715780,
      *       "type_name": "Livraison express à domicile par Chronopost",
+     *       "items": [{"id":1}, {"id": 2}],
+     *       "stores": [{"id":1}, {"id": 2}],
      *       "additional_data": {
      *           "shipping_method_id": 1245,
      *           "shipping_method_amount": 10.20,
@@ -722,74 +726,6 @@ class CartApiController extends FOSRestController
         } catch (\Exception $exception) {
             $data = ['success' => false, 'message' => $exception->getMessage()];
             $view = $this->view($data, 400);
-        }
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * Apply a behavior
-     *
-     * **Request Format**
-     *<pre>
-     * {
-     *   "cart":{
-     *     "behaviors": [{
-     *         "type": "shipping_address",
-     *         "source": 1,
-     *         "target": [1,2]
-     *  }]
-     *   }
-     * }
-     *</pre>
-     *
-     * @Post("cart/{cart_id}/behavior",requirements={"_format"="json"},defaults={"_format" = "json"}, name="post_behavior")
-     * @ParamConverter("cart", class="CartBusinessBundle:Cart")
-     * @ApiDoc(
-     *
-     *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Behavior",
-     *       "parsers"={
-     *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
-     *       }
-     *     },
-     *  output={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
-     *       "parsers"={
-     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
-     *       }
-     *     },
-     *  resource=true,
-     *  description="Apply a Behavior",
-     *  section="Behaviors",
-     *
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      400="Returned when a business exception occurred",
-     *      500="Returned when a technical error occurs, request must be retry"
-     *  },
-     *
-     * )
-     *
-     * @return array
-     */
-
-    public function addBehaviorAction(Request $request, Cart $cart)
-    {
-        $form = $this->createForm(CartBehaviorType::class, $cart);
-        $form->handleRequest($request);
-
-        try {
-            $this->validateForm($form);
-
-            $cart = $this->getCartBusiness()->createCart($cart);
-            $view = $this->view($cart, 200);
-
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 406);
-        } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 406);
         }
 
         return $this->handleView($view);

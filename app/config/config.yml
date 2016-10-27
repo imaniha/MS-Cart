@@ -8,7 +8,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    jms_serializer.form_error_handler.class: Rdc\Cart\CartApiBundle\Handler\FormErrorHandler
+    #jms_serializer.form_error_handler.class: Rdc\Cart\CartApiBundle\Handler\FormErrorHandler
 
 framework:
     #esi:             ~
@@ -76,7 +76,7 @@ fos_rest:
     routing_loader:
         default_format: json
     format_listener:
-        enabled: true
+        enabled: false
         rules:
             # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
             # - { path: '^/', priorities: ['json', 'xml', 'html'], fallback_format: 'json', prefer_extension: true }

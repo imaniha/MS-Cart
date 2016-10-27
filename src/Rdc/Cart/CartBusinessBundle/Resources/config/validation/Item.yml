@@ -8,3 +8,6 @@ Rdc\Cart\CartBusinessBundle\Vo\Item:
             - NotBlank: ~
             - Type:
                 type: integer
+        storeId:
+            - Type:
+                type: integer

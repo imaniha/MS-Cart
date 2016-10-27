@@ -6,22 +6,23 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
-use Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory\MultiValidatorFactory;
+use Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory\BehaviorValidatorFactory;
 
 
 class BehaviorValidator
 {
     private $validator;
 
-    public function __construct(\Symfony\Component\Validator\Validator\RecursiveValidator $validator, MultiValidatorFactory $multiValidatorFactory)
+    private $behaviorValidatorFactory;
+
+    public function __construct(\Symfony\Component\Validator\Validator\RecursiveValidator $validator, BehaviorValidatorFactory $behaviorValidatorFactory)
     {
         $this->validator = $validator;
-        $this->multiValidatorFactory = $multiValidatorFactory;
+        $this->behaviorValidatorFactory = $behaviorValidatorFactory;
     }
 
     public function preUpdate(LifecycleEventArgs $args)
     {
-
         $entity = $args->getEntity();
 
         if (!$entity instanceof Cart) {
@@ -31,7 +32,7 @@ class BehaviorValidator
         if ($args->hasChangedField('behaviors')) {
             $behaviors = $args->getNewValue('behaviors');
             foreach ($behaviors as $type => $behavior) {
-                $behaviorValidator = $this->multiValidatorFactory->get($type, $entity);
+                $behaviorValidator = $this->behaviorValidatorFactory->get($type, $entity);
                 $behaviorValidator->validate();
             }
         }

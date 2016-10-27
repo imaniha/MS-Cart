@@ -5,12 +5,10 @@ Rdc\Cart\CartBusinessBundle\Vo\Behavior:
             - Type:
                 type: integer
         target:
-            - NotBlank: ~
             - Type:
                 type: array
         type:
             - NotBlank: ~
-            - Choice: [shipping_address, billing_address, shipping_type]
+            - Choice: [shipping_address, billing_address, shipping_type_item, shipping_type_store]
             - Type:
                 type: string
-

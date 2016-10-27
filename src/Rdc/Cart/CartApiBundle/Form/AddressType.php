@@ -29,6 +29,7 @@ class AddressType extends AbstractType
             ->add('rcs', TextType::class)
             ->add('type', TextType::class)
             ->add('access_code', TextType::class)
+            ->add('items', TextType::class, array('mapped' => false))
             ->add('additional_data', TextType::class);
     }
 

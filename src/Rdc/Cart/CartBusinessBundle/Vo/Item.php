@@ -20,6 +20,11 @@ class Item extends AbstractVo
     private $quantity;
 
     /**
+     * @var integer
+     */
+    private $storeId;
+
+    /**
      * @var array
      */
     private $additionalData;
@@ -30,6 +35,7 @@ class Item extends AbstractVo
             [
                 'item_id' => null,
                 'quantity' => null,
+                'store_id' => null,
                 'additional_data' => '',
             ]
         );
@@ -62,6 +68,22 @@ class Item extends AbstractVo
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStoreId()
+    {
+        return $this->storeId;
+    }
+
+    /**
+     * @param int $storeId
+     */
+    public function setStoreId($storeId)
+    {
+        $this->storeId = $storeId;
     }
 
     /**

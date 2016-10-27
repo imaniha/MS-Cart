@@ -8,6 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class CartShippingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,6 +33,10 @@ class CartShippingType extends AbstractType
                     'allow_add' => true,
                     'by_reference' => false
                 )
+            )
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                array($this, 'onPreSubmitData')
             );
     }
 
@@ -46,5 +53,38 @@ class CartShippingType extends AbstractType
     public function getBlockPrefix()
     {
         return 'cart';
+    }
+
+    public function onPreSubmitData(FormEvent $event)
+    {
+        $data = $event->getData();
+        $behaviors = [];
+        if (isset($data['shippings'])) {
+            foreach($data['shippings'] as $shipping){
+                if (isset($shipping['items'])) {
+                    $items = [];
+                    foreach($shipping['items'] as $item){
+                        $items[] = $item['id'];
+                    }
+                    $behaviors[] = ['type' => 'shipping_type_item',
+                        'source' => $shipping['type_id'],
+                        'target' => $items
+                    ];
+                }
+                if (isset($shipping['stores'])) {
+                    $stores = [];
+                    foreach($shipping['stores'] as $store){
+                        $stores[] = $store['id'];
+                    }
+                    $behaviors[] = ['type' => 'shipping_type_store',
+                        'source' => $shipping['type_id'],
+                        'target' => $stores
+                    ];
+                }
+            }
+            if($behaviors)
+                $data['behaviors'] = $behaviors;
+            $event->setData($data);
+        }
     }
 }

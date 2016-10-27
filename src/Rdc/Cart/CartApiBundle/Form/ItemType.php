@@ -16,6 +16,7 @@ class ItemType extends AbstractType
         $builder
             ->add('item_id', IntegerType::class)
             ->add('quantity', IntegerType::class)
+            ->add('store_id', IntegerType::class)
             ->add('additional_data', TextType::class);
     }
 
