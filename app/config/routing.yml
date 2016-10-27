@@ -1,9 +1,10 @@
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+    prefix:   /api-doc
 
 cart_api:
     resource: "@CartApiBundle/Controller/"
     type:     rest
-    prefix:   /
+    prefix:   /api
+
 
