@@ -641,18 +641,19 @@ class Cart
 
         foreach ($behaviorFields as $type => $field) {
             $default_id = null;
-            if ((isset($this->behaviors[$type]) && (null !== $behaviors = $this->behaviors[$type])) && !isset($item[$type])) {
+
+            if ((isset($this->behaviors[$type]) && (null !== $behaviors = $this->behaviors[$type])) && !isset($item[$field])) {
                 foreach ($behaviors as $behavior) {
                     if (count($behavior['target']) == 0) {
                         $default_id = $behavior['source'];
                     }
                     if (in_array($item['item_id'], $behavior['target'])) {
-                        $item[$type] = $behavior['source'];
+                        $item[$field] = $behavior['source'];
                     }
                 }
             }
-            if (!isset($item[$type])) {
-                $item[$type] = $default_id;
+            if (!isset($item[$field])) {
+                $item[$field] = $default_id;
             }
         }
 

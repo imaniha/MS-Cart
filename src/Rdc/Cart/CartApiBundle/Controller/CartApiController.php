@@ -323,6 +323,8 @@ class CartApiController extends FOSRestController
     /**
      * Add address to Cart
      *
+     * Add "items" attribute that contains a collection of items to affect the address to a set of items
+     *
      * **Request Format**
      *<pre>
      * {
@@ -478,6 +480,9 @@ class CartApiController extends FOSRestController
 
     /**
      * Add shipping to Cart
+     *
+     * Add "items" attribute that contains a collection of items to affect the shipping method to a set of items
+     * Add "stores" attribute that contains a collection of store to affect the shipping method to a set of items belonging to the stores
      *
      * **Request Format**
      *<pre>
