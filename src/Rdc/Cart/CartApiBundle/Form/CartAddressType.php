@@ -56,6 +56,42 @@ class CartAddressType extends AbstractType
         return 'cart';
     }
 
+    /*
+     * convert items parameter into a behavior
+     * Ex:
+     * {
+     *   "cart":{
+     *     "address": [{
+     *       "address_id": 1,
+     *       "items": [{"id":1}}],
+     *     }]
+     *   }
+     * }
+     * Will be converted into:
+     * {
+     *   "cart":{
+     *     "address": [{
+     *       "address_id": 1,
+     *       "items": [{
+     *         "item_id": 3,
+     *         "quantity": 3,
+     *        }]
+     *     }]
+     *   },
+     *   "behaviors":{
+     *     "billing_address": {
+  	 *        "1": {
+  	 *		    "type": "billing_address",
+  	 *		    "source": 1,
+  	 *		    "target": [
+  	 *			  3
+  	 *		    ]
+  	 *	      }
+  	 *     }
+     *   }
+     * }
+     *
+     */
     public function onPreSubmitData(FormEvent $event)
     {
         $data = $event->getData();

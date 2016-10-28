@@ -61,6 +61,7 @@ class CartShippingType extends AbstractType
         $behaviors = [];
         if (isset($data['shippings'])) {
             foreach($data['shippings'] as $shipping){
+                //generate cart shiping item behavior
                 if (isset($shipping['items'])) {
                     $items = [];
                     foreach($shipping['items'] as $item){
@@ -71,6 +72,7 @@ class CartShippingType extends AbstractType
                         'target' => $items
                     ];
                 }
+                //generate cart shipping store behavior
                 if (isset($shipping['stores'])) {
                     $stores = [];
                     foreach($shipping['stores'] as $store){

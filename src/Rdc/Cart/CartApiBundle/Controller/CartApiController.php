@@ -731,11 +731,18 @@ class CartApiController extends FOSRestController
         return $this->handleView($view);
     }
 
+    /**
+     * @return   \Rdc\Cart\CartBusinessBundle\Service\CartBusiness
+     */
     protected function getCartBusiness()
     {
         return $this->get('cart.business');
     }
 
+    /**
+     * @param \Symfony\Component\Form\AbstractType Form to be validated
+     * @throws \Rdc\Cart\CartApiBundle\Exception\FormValidationException if the form is invalid
+     */
     protected function validateForm($form)
     {
         if (!$form->isValid()) {
@@ -743,6 +750,12 @@ class CartApiController extends FOSRestController
         }
     }
 
+    /**
+     *
+     * @param    string  repository name
+     * @return   \Doctrine\ORM\EntityRepository
+     *
+     */
     protected function getRepository($repository)
     {
         return $this->getDoctrine()->getRepository($repository);

@@ -96,6 +96,7 @@ class Cart
 
     /**
      * @var array
+     * @Expose
      */
     private $behaviors;
 
@@ -624,6 +625,11 @@ class Cart
         return $this;
     }
 
+
+    /**
+     * @param $item
+     * @return $item with integrated behaviors
+     */
     private function behaviorResolver($item)
     {
         $behaviorFields = [
@@ -634,11 +640,11 @@ class Cart
         ];
 
         foreach ($behaviorFields as $type => $field) {
-            $default_address_id = null;
+            $default_id = null;
             if ((isset($this->behaviors[$type]) && (null !== $behaviors = $this->behaviors[$type])) && !isset($item[$type])) {
                 foreach ($behaviors as $behavior) {
                     if (count($behavior['target']) == 0) {
-                        $default_address_id = $behavior['source'];
+                        $default_id = $behavior['source'];
                     }
                     if (in_array($item['item_id'], $behavior['target'])) {
                         $item[$type] = $behavior['source'];
@@ -646,7 +652,7 @@ class Cart
                 }
             }
             if (!isset($item[$type])) {
-                $item[$type] = $default_address_id;
+                $item[$type] = $default_id;
             }
         }
 
