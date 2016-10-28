@@ -51,7 +51,7 @@ Rdc\Cart\CartBusinessBundle\Vo\Address:
             - Type:
                 type: string
         type:
-            - Choice: [shipping_address, billing_address]
+            - Choice: [shipping_address, billing_address, shipping_billing_address]
             - Type:
                 type: string
         rcs:
