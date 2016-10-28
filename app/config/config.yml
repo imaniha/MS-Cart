@@ -76,7 +76,7 @@ fos_rest:
     routing_loader:
         default_format: json
     format_listener:
-        enabled: false
+        enabled: true
         rules:
             # setting fallback_format to json means that instead of considering the next rule in case of a priority mismatch, json will be used
             # - { path: '^/', priorities: ['json', 'xml', 'html'], fallback_format: 'json', prefer_extension: true }
