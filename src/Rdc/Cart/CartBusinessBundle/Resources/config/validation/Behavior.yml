@@ -1,0 +1,14 @@
+Rdc\Cart\CartBusinessBundle\Vo\Behavior:
+    properties:
+        source:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        target:
+            - Type:
+                type: array
+        type:
+            - NotBlank: ~
+            - Choice: [shipping_address, billing_address, delivery_method_item, delivery_method_store]
+            - Type:
+                type: string

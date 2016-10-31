@@ -50,6 +50,10 @@ Rdc\Cart\CartBusinessBundle\Vo\Address:
         fax:
             - Type:
                 type: string
+        type:
+            - Choice: [shipping_address, billing_address, shipping_billing_address]
+            - Type:
+                type: string
         rcs:
             - Type:
                 type: string

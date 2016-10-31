@@ -1,14 +1,16 @@
 Rdc\Cart\CartBusinessBundle\Entity\Cart:
     getters:
         address:
-            - Valid: ~
+            - Valid: { traverse: true }
         customer:
             - Valid: ~
-        shipping:
-            - Valid: ~
+        deliveryMethods:
+            - Valid: { traverse: true }
         payment:
             - Valid: ~
         items:
+            - Valid: { traverse: true }
+        behaviors:
             - Valid: { traverse: true }
     properties:
         channel:
@@ -23,3 +25,5 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
             - NotBlank: ~
             - Type:
                 type: string
+        behaviors:
+            - Type: array

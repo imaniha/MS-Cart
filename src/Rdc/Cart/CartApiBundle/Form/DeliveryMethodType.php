@@ -9,13 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class ShippingType extends AbstractType
+class DeliveryMethodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('type_id', IntegerType::class)
             ->add('type_name', TextType::class)
+            ->add('items', TextType::class, array('mapped' => false))
+            ->add('stores', TextType::class, array('mapped' => false))
             ->add('additional_data', TextType::class);
     }
 
@@ -23,7 +25,7 @@ class ShippingType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Shipping',
+                'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\DeliveryMethod',
                 'csrf_protection' => false,
                 'error_bubbling' => false,
             ]
@@ -32,6 +34,6 @@ class ShippingType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'payment';
+        return 'delivery_method';
     }
 }

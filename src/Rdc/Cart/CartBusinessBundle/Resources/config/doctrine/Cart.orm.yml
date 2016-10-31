@@ -32,10 +32,13 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
         address:
             type: json_array
             nullable: true
+        behaviors:
+            type: json_array
+            nullable: true
         payment:
             type: json_array
             nullable: true
-        shipping:
+        deliveryMethods:
             type: json_array
             nullable: true
         promotion:

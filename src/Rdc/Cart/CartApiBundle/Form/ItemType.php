@@ -16,6 +16,7 @@ class ItemType extends AbstractType
         $builder
             ->add('item_id', IntegerType::class)
             ->add('quantity', IntegerType::class)
+            ->add('store_id', IntegerType::class)
             ->add('additional_data', TextType::class);
     }
 
@@ -24,7 +25,6 @@ class ItemType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => 'Rdc\Cart\CartBusinessBundle\Vo\Item',
-                'allow_extra_fields' => true,
                 'csrf_protection' => false,
             ]
         );

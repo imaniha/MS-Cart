@@ -8,3 +8,14 @@ services:
 
     address.business:
         class: Rdc\Cart\CartBusinessBundle\Service\AddressBusiness
+
+    behavior.validator.factory:
+        class: Rdc\Cart\CartBusinessBundle\Service\Behavior\Factory\BehaviorValidatorFactory
+
+    cart.behavior.listener:
+        class: Rdc\Cart\CartBusinessBundle\Service\Behavior\EventListener\BehaviorValidator
+        arguments: ['@validator', '@behavior.validator.factory']
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+
