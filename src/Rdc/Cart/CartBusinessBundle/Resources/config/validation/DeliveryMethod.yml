@@ -1,4 +1,4 @@
-Rdc\Cart\CartBusinessBundle\Vo\Shipping:
+Rdc\Cart\CartBusinessBundle\Vo\DeliveryMethod:
     properties:
         typeId:
             - NotBlank: ~

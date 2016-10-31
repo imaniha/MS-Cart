@@ -38,7 +38,7 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
         payment:
             type: json_array
             nullable: true
-        shippings:
+        deliveryMethods:
             type: json_array
             nullable: true
         promotion:

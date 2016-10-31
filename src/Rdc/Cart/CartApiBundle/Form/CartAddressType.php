@@ -106,7 +106,7 @@ class CartAddressType extends AbstractType
                 $newAddress['type'] = 'shipping_address';
             }
         }
-        if($newAddress){
+        if(isset($newAddress)){
             $data['address'][] = $newAddress;
         }
         //create behavior

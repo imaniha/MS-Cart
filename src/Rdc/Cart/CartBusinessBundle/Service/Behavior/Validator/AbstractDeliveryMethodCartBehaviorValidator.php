@@ -5,7 +5,7 @@ use Rdc\Cart\CartBusinessBundle\Entity\Cart;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Service\Behavior\Exception\BehaviorException;
 
-Abstract class AbstractShippingCartBehaviorValidator extends AbstractCartBehaviorValidator
+Abstract class AbstractDeliveryMethodCartBehaviorValidator extends AbstractCartBehaviorValidator
 {
     const TYPE = '';
 
@@ -17,7 +17,7 @@ Abstract class AbstractShippingCartBehaviorValidator extends AbstractCartBehavio
     /**
      * @var string
      */
-    private $shipping;
+    private $deliveryMethods;
 
     /**
      * @var string
@@ -27,24 +27,24 @@ Abstract class AbstractShippingCartBehaviorValidator extends AbstractCartBehavio
     public function __construct($cart)
     {
         parent::__construct($cart);
-        $this->setShipping($cart->getShippingsAsArray());
+        $this->setDeliveryMethod($cart->getDeliveryMethodsAsArray());
         $this->setBehavior($cart->getBehaviorsByType(static::TYPE));
     }
 
     /**
      * @return string
      */
-    public function getShipping()
+    public function getDeliveryMethods()
     {
-        return $this->shipping;
+        return $this->deliveryMethods;
     }
 
     /**
-     * @param string $shipping
+     * @param string $deliveryMethods
      */
-    public function setShipping($shipping)
+    public function setDeliveryMethods($deliveryMethods)
     {
-        $this->shipping = $shipping;
+        $this->deliveryMethods = $deliveryMethods;
     }
 
     /**
@@ -83,11 +83,11 @@ Abstract class AbstractShippingCartBehaviorValidator extends AbstractCartBehavio
      * @return Void the provided address exist
      * @throws BehaviorException if the provided address is not found
      */
-    public function checkShipping($shippingId)
+    public function checkShipping($deliveryMethodId)
     {
-        if (!$this->getShipping() || !isset($this->getShipping()[$shippingId])) {
+        if (!$this->getDeliveryMethods() || !isset($this->deliveryMethods()[$deliveryMethodId])) {
 
-            throw new BehaviorException(sprintf('Invalid Behavior: Shipping %d does not exist', $shippingId));
+            throw new BehaviorException(sprintf('Invalid Behavior: Shipping %d does not exist', $deliveryMethodId));
         }
 
         return;

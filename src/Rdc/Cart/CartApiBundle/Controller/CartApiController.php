@@ -18,10 +18,10 @@ use Rdc\Cart\CartApiBundle\Form\CartType;
 use Rdc\Cart\CartApiBundle\Form\ItemType;
 use Rdc\Cart\CartApiBundle\Form\CartAddressType;
 use Rdc\Cart\CartApiBundle\Form\CartPaymentType;
-use Rdc\Cart\CartApiBundle\Form\CartShippingType;
+use Rdc\Cart\CartApiBundle\Form\CartDeliveryMethodType;
 use Rdc\Cart\CartApiBundle\Form\CartCustomerType;
 use Rdc\Cart\CartApiBundle\Form\CartItemsType;
-use Rdc\Cart\CartApiBundle\Form\CartBehaviorType;
+use Rdc\Cart\CartApiBundle\Form\DeliveryMethodType;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Version;
 use Rdc\Cart\CartApiBundle\Exception\FormValidationException;
@@ -404,11 +404,6 @@ class CartApiController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function addDeliveryMethodAction($cartId)
-    {
-        // TODO implement method
-    }
-
     /**
      * Add payment to Cart
      *
@@ -479,38 +474,38 @@ class CartApiController extends FOSRestController
     }
 
     /**
-     * Add shipping to Cart
+     * Add delivery method to Cart
      *
-     * Add "items" attribute that contains a collection of items to affect the shipping method to a set of items
-     * Add "stores" attribute that contains a collection of store to affect the shipping method to a set of items belonging to the stores
+     * Add "items" attribute that contains a collection of items to affect the delivery method to a set of items
+     * Add "stores" attribute that contains a collection of store to affect the delivery method to a set of items belonging to the stores
      *
      * **Request Format**
      *<pre>
      * {
      *   "cart":{
-     *     "shippings": [{
+     *     "delivery_methods": [{
      *       "type_id": 73715780,
      *       "type_name": "Livraison express à domicile par Chronopost",
      *       "items": [{"id":1}, {"id": 2}],
      *       "stores": [{"id":1}, {"id": 2}],
      *       "additional_data": {
-     *           "shipping_method_id": 1245,
-     *           "shipping_method_amount": 10.20,
-     *           "shipping_method_delivery_id": "4-BE-Livraison express à domicile par Chronopost"
+     *           "delivery_method_id": 1245,
+     *           "delivery_method_amount": 10.20,
+     *           "delivery_method_delivery_id": "4-BE-Livraison express à domicile par Chronopost"
      *       }
      *     }]
      *   }
      * }
      *</pre>
      *
-     * @Post("cart/{cart_id}/shipping",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"}, name="add_shipping_to_cart")
+     * @Post("cart/{cart_id}/deliverymethod",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"})
      * @ParamConverter("cart", class="CartBusinessBundle:Cart")
      * @ApiDoc(
      *  resource=true,
-     *  description="Add shipping to Cart",
+     *  description="Add delivery method to Cart",
      *
      *  input={
-     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Shipping",
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\DeliveryMethod",
      *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
@@ -522,7 +517,7 @@ class CartApiController extends FOSRestController
      *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
      *     },
-     *  section="Shipping",
+     *  section="Delivery method",
      *  statusCodes={
      *      200="Returned when successful",
      *      400="Returned when a business exception occurred",
@@ -532,9 +527,9 @@ class CartApiController extends FOSRestController
      *
      * @return array
      */
-    public function addShippingAction(Request $request, Cart $cart)
+    public function addDeliveryMethodAction(Request $request, Cart $cart)
     {
-        $form = $this->createForm(CartShippingType::class, $cart);
+        $form = $this->createForm(CartDeliveryMethodType::class, $cart);
 
         $form->handleRequest($request);
 

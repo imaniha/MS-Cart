@@ -15,7 +15,7 @@ use Rdc\Cart\CartBusinessBundle\Vo\Address;
 use Rdc\Cart\CartBusinessBundle\Vo\Behavior;
 use Rdc\Cart\CartBusinessBundle\Vo\Customer;
 use Rdc\Cart\CartBusinessBundle\Vo\Payment;
-use Rdc\Cart\CartBusinessBundle\Vo\Shipping;
+use Rdc\Cart\CartBusinessBundle\Vo\DeliveryMethod;
 use Rdc\Cart\CartBusinessBundle\Vo\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -92,7 +92,7 @@ class Cart
      * @var array
      * @Expose
      */
-    private $shippings = [];
+    private $deliveryMethods = [];
 
     /**
      * @var array
@@ -561,36 +561,36 @@ class Cart
     }
 
     /**
-     * Set shippings
+     * Set deliveryMethods
      *
-     * @param array $shippings
+     * @param array $deliveryMethods
      * @return Cart
      */
-    public function setShippings($shippings)
+    public function setDeliveryMethods($deliveryMethods)
     {
-        $this->shippings = $shippings;
+        $this->deliveryMethods = $deliveryMethods;
 
         return $this;
     }
 
     /**
-     * Get shippings
+     * Get deliveryMethods
      *
      * @return array
      */
-    public function getShippings()
+    public function getDeliveryMethods()
     {
-        if (null === $this->shippings) {
+        if (null === $this->deliveryMethods) {
             return null;
         }
 
         $collection = new ArrayCollection();
 
-        foreach ($this->shippings as $shipping) {
-            if (is_object($shipping)) {
-                $collection->add($shipping);
+        foreach ($this->deliveryMethods as $deliveryMethod) {
+            if (is_object($deliveryMethod)) {
+                $collection->add($deliveryMethod);
             } else {
-                $collection->add(new Shipping($shipping));
+                $collection->add(new DeliveryMethod($deliveryMethod));
             }
         }
 
@@ -598,28 +598,28 @@ class Cart
     }
 
     /**
-     * Get shippings
+     * Get deliveryMethods
      *
      * @return array
      */
-    public function getShippingsAsArray()
+    public function getDeliveryMethodsAsArray()
     {
 
-        return $this->shippings;
+        return $this->deliveryMethods;
     }
 
-    public function addShipping($shipping)
+    public function addDeliveryMethod($deliveryMethod)
     {
-        if ($shipping->getTypeId()) {
-            $this->shippings[$shipping->getTypeId()] = $shipping->toArray();
-            $this->setShippings($this->shippings);
+        if ($deliveryMethod->getTypeId()) {
+            $this->deliveryMethods[$deliveryMethod->getTypeId()] = $deliveryMethod->toArray();
+            $this->setDeliveryMethods($this->deliveryMethods);
         }
 
         return $this;
     }
 
 
-    public function removeShipping($shipping)
+    public function removeDeliveryMethod($deliveryMethod)
     {
 
         return $this;
@@ -635,8 +635,8 @@ class Cart
         $behaviorFields = [
             'billing_address' => 'billing_address_id',
             'shipping_address' => 'shipping_address_id',
-            'shipping_type_item' => 'shipping_id',
-            'shipping_type_store' => 'shipping_id',
+            'delivery_method_item' => 'delivery_method_id',
+            'delivery_method_store' => 'delivery_method_id',
         ];
 
         foreach ($behaviorFields as $type => $field) {

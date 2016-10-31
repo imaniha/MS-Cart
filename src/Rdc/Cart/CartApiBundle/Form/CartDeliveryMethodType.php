@@ -2,7 +2,7 @@
 
 namespace Rdc\Cart\CartApiBundle\Form;
 
-use Rdc\Cart\CartApiBundle\Form\ShippingType;
+use Rdc\Cart\CartApiBundle\Form\DeliveryMethodType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,16 +11,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class CartShippingType extends AbstractType
+class CartDeliveryMethodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
-                'shippings',
+                'delivery_methods',
                 CollectionType::class,
                 array(
-                    'entry_type' => ShippingType::class,
+                    'entry_type' => DeliveryMethodType::class,
                     'allow_add' => true,
                     'by_reference' => false,
                 )
@@ -59,27 +59,27 @@ class CartShippingType extends AbstractType
     {
         $data = $event->getData();
         $behaviors = [];
-        if (isset($data['shippings'])) {
-            foreach($data['shippings'] as $shipping){
-                //generate cart shiping item behavior
-                if (isset($shipping['items'])) {
+        if (isset($data['delivery_methods'])) {
+            foreach($data['delivery_methods'] as $deliverymethod){
+                //generate cart delivery method item behavior
+                if (isset($deliverymethod['items'])) {
                     $items = [];
-                    foreach($shipping['items'] as $item){
+                    foreach($deliverymethod['items'] as $item){
                         $items[] = $item['id'];
                     }
-                    $behaviors[] = ['type' => 'shipping_type_item',
-                        'source' => $shipping['type_id'],
+                    $behaviors[] = ['type' => 'delivery_method_item',
+                        'source' => $deliverymethod['type_id'],
                         'target' => $items
                     ];
                 }
-                //generate cart shipping store behavior
-                if (isset($shipping['stores'])) {
+                //generate cart delivery method store behavior
+                if (isset($deliverymethod['stores'])) {
                     $stores = [];
-                    foreach($shipping['stores'] as $store){
+                    foreach($deliverymethod['stores'] as $store){
                         $stores[] = $store['id'];
                     }
-                    $behaviors[] = ['type' => 'shipping_type_store',
-                        'source' => $shipping['type_id'],
+                    $behaviors[] = ['type' => 'delivery_method_store',
+                        'source' => $deliverymethod['type_id'],
                         'target' => $stores
                     ];
                 }

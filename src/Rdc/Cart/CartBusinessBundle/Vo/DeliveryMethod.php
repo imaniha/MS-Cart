@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Shipping
  */
-class Shipping extends AbstractVo
+class DeliveryMethod extends AbstractVo
 {
 
     /**
