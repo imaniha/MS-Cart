@@ -90,13 +90,11 @@ class Cart
 
     /**
      * @var array
-     * @Expose
      */
     private $deliveryMethods = [];
 
     /**
      * @var array
-     * @Expose
      */
     private $behaviors;
 
@@ -490,7 +488,7 @@ class Cart
                     $this->address[$address->getType()][$address->getAddressId()] = $address->toArray();
                 }
             }
-        }else{
+        } else {
             $this->address = $addresses;
         }
 
@@ -574,7 +572,7 @@ class Cart
                     $this->deliveryMethods[$deliveryMethod->getTypeId()] = $deliveryMethod->toArray();
                 }
             }
-        }else{
+        } else {
             $this->deliveryMethods = $deliveryMethods;
         }
 
@@ -604,6 +602,27 @@ class Cart
 
         return $collection;
     }
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("delivery_methods")
+     *
+     * @return string
+     */
+    public function getFlatDeliveryMethods()
+    {
+        $collection = new ArrayCollection();
+        if (is_array($this->deliveryMethods)) {
+            foreach ($this->deliveryMethods as $deliveryMethods) {
+                $collection->add($deliveryMethods);
+            }
+        } else {
+            return null;
+        }
+
+        return $collection;
+    }
+
 
     /**
      * Get deliveryMethods
