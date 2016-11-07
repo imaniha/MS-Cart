@@ -22,20 +22,16 @@ class FormErrorHandler extends JMSFormErrorHandler
 
     private function convertFormToArray(GenericSerializationVisitor $visitor, Form $data)
     {
-        $form = $errors = $globals = [];
+        $form = $errors = [];
+        $global = '';
         $form['success'] = false;
         $form['code'] = 400;
         $form['errors'] = [];
 
-        //get global error
-        foreach ($data->getErrors() as $error) {
-            $global[] = $error->getMessage();
-        }
+        $this->getErrors($data, $errors, $global);
 
-        $this->getErrors($data, $errors);
-
-        if ($globals) {
-            $form['errors']['global'] = $globals;
+        if ($global) {
+            $form['errors']['global'] = $global;
         }
         if ($errors) {
             $form['errors']['fields'] = $errors;
@@ -46,8 +42,13 @@ class FormErrorHandler extends JMSFormErrorHandler
         return $form;
     }
 
-    protected function getErrors($data, &$errors)
+    protected function getErrors($data, &$errors, &$global)
     {
+
+        //get global error
+        foreach ($data->getErrors() as $error) {
+            $global = $error->getMessage();
+        }
 
         foreach ($data->all() as  $child) {
             foreach ($child->getErrors() as $error) {
@@ -57,7 +58,7 @@ class FormErrorHandler extends JMSFormErrorHandler
             }
 
             if ($child->all()) {
-                $this->getErrors($child, $errors);
+                $this->getErrors($child, $errors, $global);
             }
         }
 
