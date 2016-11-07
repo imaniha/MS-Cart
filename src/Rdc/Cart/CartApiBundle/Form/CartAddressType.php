@@ -95,7 +95,6 @@ class CartAddressType extends AbstractType
     public function onPreSubmitData(FormEvent $event)
     {
 
-
         $data = $event->getData();
         //handle type = 'shipping_billing_address' => generate 2 addresses of type shipping_address / billing_address
         foreach($data['address'] as &$address){
@@ -109,6 +108,7 @@ class CartAddressType extends AbstractType
         if(isset($newAddress)){
             $data['address'][] = $newAddress;
         }
+        unset($address);
         //create behavior
         $behaviors = [];
         if (isset($data['address'])) {

@@ -90,13 +90,11 @@ class Cart
 
     /**
      * @var array
-     * @Expose
      */
     private $deliveryMethods = [];
 
     /**
      * @var array
-     * @Expose
      */
     private $behaviors;
 
@@ -478,9 +476,21 @@ class Cart
      * @param array $address
      * @return Cart
      */
-    public function setAddress($address)
+    public function setAddress($addresses)
     {
-        $this->address = $address;
+        //reset address and addresses behaviors
+        $this->address = [];
+        unset($this->behaviors['billing_address'], $this->behaviors['shipping_address']);
+
+        if ($addresses instanceof ArrayCollection) {
+            foreach ($addresses as $address) {
+                if ($address->getAddressId()) {
+                    $this->address[$address->getType()][$address->getAddressId()] = $address->toArray();
+                }
+            }
+        } else {
+            $this->address = $addresses;
+        }
 
         return $this;
     }
@@ -525,23 +535,6 @@ class Cart
         return isset($this->address[$type]) ? $this->address[$type] : null;
     }
 
-    public function addAddres($address)
-    {
-
-        if ($address->getAddressId()) {
-
-            $this->address[$address->getType()][$address->getAddressId()] = $address->toArray();
-            $this->setAddress($this->address);
-        }
-
-        return $this;
-    }
-
-    public function removeAddres($address)
-    {
-
-        return $this;
-    }
 
     /**
      * @return \Rdc\Cart\CartBusinessBundle\Entity\Payment
@@ -568,7 +561,20 @@ class Cart
      */
     public function setDeliveryMethods($deliveryMethods)
     {
-        $this->deliveryMethods = $deliveryMethods;
+
+        //reset existing deliveryMethods
+        $this->deliveryMethods = [];
+        unset($this->behaviors['delivery_method_item'], $this->behaviors['delivery_method_store']);
+
+        if ($deliveryMethods instanceof ArrayCollection) {
+            foreach ($deliveryMethods as $deliveryMethod) {
+                if ($deliveryMethod->getTypeId()) {
+                    $this->deliveryMethods[$deliveryMethod->getTypeId()] = $deliveryMethod->toArray();
+                }
+            }
+        } else {
+            $this->deliveryMethods = $deliveryMethods;
+        }
 
         return $this;
     }
@@ -598,6 +604,27 @@ class Cart
     }
 
     /**
+     * @VirtualProperty
+     * @SerializedName("delivery_methods")
+     *
+     * @return string
+     */
+    public function getFlatDeliveryMethods()
+    {
+        $collection = new ArrayCollection();
+        if (is_array($this->deliveryMethods)) {
+            foreach ($this->deliveryMethods as $deliveryMethods) {
+                $collection->add($deliveryMethods);
+            }
+        } else {
+            return null;
+        }
+
+        return $collection;
+    }
+
+
+    /**
      * Get deliveryMethods
      *
      * @return array
@@ -607,24 +634,6 @@ class Cart
 
         return $this->deliveryMethods;
     }
-
-    public function addDeliveryMethod($deliveryMethod)
-    {
-        if ($deliveryMethod->getTypeId()) {
-            $this->deliveryMethods[$deliveryMethod->getTypeId()] = $deliveryMethod->toArray();
-            $this->setDeliveryMethods($this->deliveryMethods);
-        }
-
-        return $this;
-    }
-
-
-    public function removeDeliveryMethod($deliveryMethod)
-    {
-
-        return $this;
-    }
-
 
     /**
      * @param $item
