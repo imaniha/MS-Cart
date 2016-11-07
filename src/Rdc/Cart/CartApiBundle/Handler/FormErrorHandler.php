@@ -22,36 +22,45 @@ class FormErrorHandler extends JMSFormErrorHandler
 
     private function convertFormToArray(GenericSerializationVisitor $visitor, Form $data)
     {
-        $form = $errors = [];
+        $form = $errors = $globals = [];
         $form['success'] = false;
         $form['code'] = 400;
+        $form['errors'] = [];
 
+        //get global error
         foreach ($data->getErrors() as $error) {
-            $errors['global'] = $error->getMessage();
+            $global[] = $error->getMessage();
         }
 
-        foreach ($data->all() as $child) {
+        $this->getErrors($data, $errors);
+
+        if ($globals) {
+            $form['errors']['global'] = $globals;
+        }
+        if ($errors) {
+            $form['errors']['fields'] = $errors;
+        }
+
+        $visitor->setRoot($form);
+
+        return $form;
+    }
+
+    protected function getErrors($data, &$errors)
+    {
+
+        foreach ($data->all() as  $child) {
             foreach ($child->getErrors() as $error) {
                 if ($error->getMessage() != '') {
                     $errors[$child->getName()] = $error->getMessage();
                 }
             }
 
-            foreach ($child->all() as $child2) {
-                foreach ($child2->getErrors() as $childError) {
-                    if ($childError->getMessage() != '') {
-                        $errors[$child2->getName()] = $childError->getMessage();
-                    }
-                }
+            if ($child->all()) {
+                $this->getErrors($child, $errors);
             }
         }
 
-        if ($errors) {
-            $form['errors'] = $errors;
-        }
-
-        $visitor->setRoot($form);
-
-        return $form;
+        return $errors;
     }
 }
