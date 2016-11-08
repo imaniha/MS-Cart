@@ -9,7 +9,7 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
         payment:
             - Valid: ~
         items:
-            - Valid: { traverse: true }
+            - Valid: ~
         behaviors:
             - Valid: { traverse: true }
     properties:
@@ -27,3 +27,5 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
                 type: string
         behaviors:
             - Type: array
+        items:
+            - Valid: ~

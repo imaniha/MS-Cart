@@ -1,6 +1,9 @@
 Rdc\Cart\CartBusinessBundle\Vo\Item:
     properties:
         itemId:
+            - Type:
+                type: integer
+        offerId:
             - NotBlank: ~
             - Type:
                 type: integer
@@ -11,3 +14,48 @@ Rdc\Cart\CartBusinessBundle\Vo\Item:
         storeId:
             - Type:
                 type: integer
+        name:
+            - NotBlank: ~
+            - Type:
+                type: string
+        price:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        image:
+            - Type:
+                type: string
+        merchantId:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        merchantName:
+            - NotBlank: ~
+            - Type:
+                type: string
+        brandId:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        brandName:
+            - NotBlank: ~
+            - Type:
+                type: string
+        stock:
+            - NotBlank: ~
+            - Type:
+                type: integer
+        managedStock:
+            - NotBlank: ~
+            - Type:
+                type: boolean
+        productUrl:
+            - Type:
+                type: string
+        attributes:
+            - Type:
+                type: array
+        reference:
+            - NotBlank: ~
+            - Type:
+                type: array
