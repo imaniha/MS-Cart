@@ -307,7 +307,7 @@ class Cart
                 $collection->add(new Item($item));
             }
         }
-
+dump($collection);
         return $collection;
     }
 
@@ -342,10 +342,12 @@ class Cart
 
     public function addItem($item)
     {
-        if ($item->getItemId()) {
-            $this->items[$item->getItemId()] = $item->toArray();
-            $this->setItems($this->items);
+        if (!$item->getItemId()) {
+            $item->setItemId(rand(1, 1000));
         }
+
+        $this->items[$item->getItemId()] = $item->toArray();
+        $this->setItems($this->items);
 
         return $this;
     }

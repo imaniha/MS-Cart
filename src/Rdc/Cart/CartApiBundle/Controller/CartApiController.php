@@ -228,9 +228,26 @@ class CartApiController extends FOSRestController
      *{
      *  "cart": {
      *    "items": [{
-     *      "item_id": 3,
+     *      "offer_id": 3,
      *      "quantity": 3,
-     *      "store_id": 5,
+     *      "name": "clavier",
+     *      "price": 100,
+     *      "image": "http://www.rueducommerce.fr/mon_image.jpg",
+     *      "merchant_id": 178,
+     *      "merchant_name": "Rue du commerce",
+     *      "brand_id": 493,
+     *      "brand_name": "Corsair",
+     *      "attributes": {
+     *        "field1": "value1",
+     *        "field2": "value2"
+     *      },
+     *      "stock": 12,
+     *      "managed_stock": true,
+     *      "product_url": "/product1.php",
+     *      "reference": {
+     *        "field1": "value1",
+     *        "field2": "value2"
+     *      },
      *      "additional_data": {
      *        "extra1": "data extra1",
      *        "extra2": "data extra2"
