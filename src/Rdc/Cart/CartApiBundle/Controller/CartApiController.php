@@ -221,16 +221,13 @@ class CartApiController extends FOSRestController
     }
 
     /**
-     * Add an item to Cart
-     *
-     * use item_id to update an existing item
+     * Add items to Cart
      *
      * **Request Format**
      *<pre>
      *{
      *  "cart": {
      *    "items": [{
-     *      "item_id": 12,
      *      "offer_id": 3,
      *      "quantity": 3,
      *      "name": "clavier",
@@ -260,7 +257,6 @@ class CartApiController extends FOSRestController
      *}
      *</pre>
      * @Post("cart/{cart_id}/item",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"}, name="add_item_to_cart")
-     * @Put("cart/{cart_id}/item",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"}, name="update_cart_item")
      * @ParamConverter("cart", class="CartBusinessBundle:Cart")
      * @ApiDoc(
      *  resource=true,
@@ -298,6 +294,92 @@ class CartApiController extends FOSRestController
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
             $view = $this->view($cart, 200);
+
+        } catch (FormValidationException $exception) {
+            $view = $this->view($form, 400);
+        } catch (\Exception $exception) {
+            $data = ['success' => false, 'message' => $exception->getMessage()];
+            $view = $this->view($data, 400);
+        }
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * Update Cart Item
+     *
+     * **Request Format**
+     *<pre>
+     *{
+     *  "cart": {
+     *    "items": [{
+     *      "item_id": 12,
+     *      "offer_id": 3,
+     *      "quantity": 3,
+     *      "name": "clavier",
+     *      "price": 100,
+     *      "image": "http://www.rueducommerce.fr/mon_image.jpg",
+     *      "merchant_id": 178,
+     *      "merchant_name": "Rue du commerce",
+     *      "brand_id": 493,
+     *      "brand_name": "Corsair",
+     *      "attributes": {
+     *        "field1": "value1",
+     *        "field2": "value2"
+     *      },
+     *      "stock": 12,
+     *      "managed_stock": true,
+     *      "product_url": "/product1.php",
+     *      "reference": {
+     *        "field1": "value1",
+     *        "field2": "value2"
+     *      },
+     *      "additional_data": {
+     *        "extra1": "data extra1",
+     *        "extra2": "data extra2"
+     *      }
+     *    }]
+     *  }
+     *}
+     *</pre>
+     * @Put("cart/{cart_id}/item",requirements={"_format"="json", "cart_id": "\d+"},defaults={"_format" = "json"}, name="add_item_to_cart")
+     * @ParamConverter("cart", class="CartBusinessBundle:Cart")
+     * @ApiDoc(
+     *  resource=true,
+     *  input={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Vo\Item",
+     *       "groups"={"nelmio"},
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser",
+     *         "Nelmio\ApiDocBundle\Parser\ValidationParser"
+     *       }
+     *     },
+     *  output={
+     *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
+     *       "parsers"={
+     *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
+     *       }
+     *     },
+     *  description="Update Cart Items",
+     *  section="Item",
+     *  statusCodes={
+     *      201="Returned when successful",
+     *      400="Returned when a business exception occurred",
+     *      500="Returned when a technical error occurs, request must be retry"
+     *  }
+     * )
+     *
+     * @return array
+     */
+    public function updateItemAction(Request $request, Cart $cart)
+    {
+        $form = $this->createForm(CartItemsType::class, $cart, ['method'=>$request->getMethod()]);
+        $form->handleRequest($request);
+
+        try {
+            $this->validateForm($form);
+            $cart = $this->getCartBusiness()->createCart($cart);
+            $view = $this->view($cart, 201);
 
         } catch (FormValidationException $exception) {
             $view = $this->view($form, 400);

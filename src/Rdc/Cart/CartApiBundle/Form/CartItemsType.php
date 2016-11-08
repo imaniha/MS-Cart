@@ -19,6 +19,7 @@ class CartItemsType extends AbstractType
             [
                 'entry_type' => ItemType::class,
                 'allow_add' => true,
+                'method' => $options['method'],
                 'by_reference' => false,
                 'constraints' => new Count(
                     array('min' => 1, 'minMessage' => 'Please post at least one item')

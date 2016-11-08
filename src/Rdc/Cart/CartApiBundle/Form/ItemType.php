@@ -9,12 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class ItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item_id', IntegerType::class)
             ->add('offer_id', IntegerType::class)
             ->add('store_id', IntegerType::class)
             ->add('quantity', IntegerType::class)
@@ -31,6 +33,17 @@ class ItemType extends AbstractType
             ->add('product_url', TextType::class)
             ->add('reference', TextType::class)
             ->add('additional_data', TextType::class);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $parent = $form->getParent();
+                if (null !== $parent && 'PUT' === $parent->getConfig()->getMethod()) {
+                    $form->add('item_id', IntegerType::class);
+                }
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -47,4 +60,6 @@ class ItemType extends AbstractType
     {
         return 'item';
     }
+
+
 }

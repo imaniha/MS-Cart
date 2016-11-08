@@ -307,7 +307,7 @@ class Cart
                 $collection->add(new Item($item));
             }
         }
-dump($collection);
+
         return $collection;
     }
 
