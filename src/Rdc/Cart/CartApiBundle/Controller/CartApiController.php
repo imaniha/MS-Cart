@@ -223,11 +223,14 @@ class CartApiController extends FOSRestController
     /**
      * Add an item to Cart
      *
+     * use item_id to update an existing item
+     *
      * **Request Format**
      *<pre>
      *{
      *  "cart": {
      *    "items": [{
+     *      "item_id": 12,
      *      "offer_id": 3,
      *      "quantity": 3,
      *      "name": "clavier",
