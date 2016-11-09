@@ -29,7 +29,7 @@ class Category extends AbstractVo
         $resolver->setDefaults(
             [
                 'value' => null,
-                'key' => '',
+                'key' => null,
                 'additional_data' => '',
             ]
         );

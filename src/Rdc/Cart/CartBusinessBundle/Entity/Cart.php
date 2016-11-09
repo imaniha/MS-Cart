@@ -341,13 +341,15 @@ class Cart
 
     public function addItem($item)
     {
-        var_dump($item);
-        if (!$item->getItemId()) {
+
+        if (!$item->getItemId() && $item->getOfferId()) {
             $item->setItemId(rand(1, 1000));
         }
 
-        $this->items[$item->getItemId()] = $item->toArray();
-        $this->setItems($this->items);
+        if ($item->getOfferId()) {
+            $this->items[$item->getItemId()] = $item->toArray();
+            $this->setItems($this->items);
+        }
 
         return $this;
     }
@@ -480,9 +482,15 @@ class Cart
      */
     public function setAddress($addresses)
     {
-        //reset address and addresses behaviors
-        $this->address = [];
-        unset($this->behaviors['billing_address'], $this->behaviors['shipping_address']);
+
+        if ($addresses instanceof ArrayCollection) {
+            foreach ($addresses as $address) {
+                if ($address->getAddressId()) {
+                    //reset address and addresses behaviors
+                    unset($this->address[$address->getType()], $this->behaviors[$address->getType()]);
+                }
+            }
+        }
 
         if ($addresses instanceof ArrayCollection) {
             foreach ($addresses as $address) {

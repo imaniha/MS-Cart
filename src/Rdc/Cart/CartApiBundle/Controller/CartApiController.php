@@ -232,7 +232,7 @@ class CartApiController extends FOSRestController
      *      "quantity": 3,
      *      "name": "clavier",
      * 	    "categories": [{
-     *          "value": "8574448",ad
+     *          "value": "8574448",
      *          "key": "universe",
      *          "additional_data": {
      *              "name": "Ordinateurs",
@@ -305,6 +305,7 @@ class CartApiController extends FOSRestController
      */
     public function addItemAction(Request $request, Cart $cart)
     {
+
         $form = $this->createForm(CartItemsType::class, $cart);
         $form->handleRequest($request);
 

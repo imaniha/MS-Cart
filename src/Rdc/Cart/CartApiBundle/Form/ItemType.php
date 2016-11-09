@@ -5,7 +5,7 @@ namespace Rdc\Cart\CartApiBundle\Form;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,7 +35,8 @@ class ItemType extends AbstractType
             ->add('product_url', TextType::class)
             ->add('reference', TextType::class)
             ->add('description', TextType::class)
-            ->add('categories',
+            ->add(
+                'categories',
                 CollectionType::class,
                 array(
                     'entry_type' => CategoryType::class,
@@ -52,6 +53,17 @@ class ItemType extends AbstractType
                 $parent = $form->getParent();
                 if (null !== $parent && 'PUT' === $parent->getConfig()->getMethod()) {
                     $form->add('item_id', IntegerType::class);
+                }
+            }
+        );
+        $builder->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $parent = $form->getParent();
+                if (null !== $parent && 'POST' === $parent->getConfig()->getMethod()) {
+                    $data = $event->getData();
+                    $data->setItemId(null);
                 }
             }
         );

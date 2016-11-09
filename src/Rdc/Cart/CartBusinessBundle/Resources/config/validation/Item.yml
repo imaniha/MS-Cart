@@ -1,6 +1,10 @@
 Rdc\Cart\CartBusinessBundle\Vo\Item:
+    getters:
+        categories:
+            - Valid: { traverse: true }
     properties:
         itemId:
+            - NotBlank: ~
             - Type:
                 type: integer
         offerId:
@@ -63,7 +67,3 @@ Rdc\Cart\CartBusinessBundle\Vo\Item:
             - NotBlank: ~
             - Type:
                 type: string
-        categories:
-            - NotBlank: ~
-            - Type:
-                type: array
