@@ -2,6 +2,7 @@
 
 namespace Rdc\Cart\CartApiBundle\Form;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -9,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -32,6 +34,15 @@ class ItemType extends AbstractType
             ->add('managed_stock', CheckboxType::class)
             ->add('product_url', TextType::class)
             ->add('reference', TextType::class)
+            ->add('description', TextType::class)
+            ->add('categories',
+                CollectionType::class,
+                array(
+                    'entry_type' => CategoryType::class,
+                    'allow_add' => true,
+                    'by_reference' => false,
+                )
+            )
             ->add('additional_data', TextType::class);
 
         $builder->addEventListener(

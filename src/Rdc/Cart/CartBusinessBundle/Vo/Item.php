@@ -2,7 +2,10 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
+use Rdc\Cart\CartBusinessBundle\Vo\Category;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 /**
  * Item
  */
@@ -83,9 +86,19 @@ class Item extends AbstractVo
     private $reference;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * @var integer
      */
     private $storeId;
+
+    /**
+     * @var array
+     */
+    private $categories;
 
     /**
      * @var array
@@ -112,6 +125,8 @@ class Item extends AbstractVo
                 'managed_stock' => null,
                 'product_url' => null,
                 'reference' => null,
+                'description' => null,
+                'categories' => null,
                 'additional_data' => '',
             ]
         );
@@ -368,6 +383,52 @@ class Item extends AbstractVo
     public function setReference($reference)
     {
         $this->reference = $reference;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategories()
+    {
+        if (null === $this->categories) {
+            return null;
+        }
+
+        $collection = new ArrayCollection();
+
+        foreach ($this->categories as $category) {
+            if (is_object($category)) {
+                $collection->add($category);
+            } else {
+                $collection->add(new Category($category));
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
     }
 
     /**

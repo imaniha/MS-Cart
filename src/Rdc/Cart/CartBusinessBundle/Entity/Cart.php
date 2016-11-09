@@ -19,7 +19,6 @@ use Rdc\Cart\CartBusinessBundle\Vo\DeliveryMethod;
 use Rdc\Cart\CartBusinessBundle\Vo\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 /**
  * Cart
  * @ExclusionPolicy("all")
@@ -342,6 +341,7 @@ class Cart
 
     public function addItem($item)
     {
+        var_dump($item);
         if (!$item->getItemId()) {
             $item->setItemId(rand(1, 1000));
         }

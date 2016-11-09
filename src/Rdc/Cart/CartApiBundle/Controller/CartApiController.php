@@ -231,12 +231,30 @@ class CartApiController extends FOSRestController
      *      "offer_id": 3,
      *      "quantity": 3,
      *      "name": "clavier",
+     * 	    "categories": [{
+     *          "value": "8574448",ad
+     *          "key": "universe",
+     *          "additional_data": {
+     *              "name": "Ordinateurs",
+     *              "code": "MC-3540",
+     *              "value_code": "universe-hccid-30"
+     *          }
+     *      }, {
+     *          "value": "8574667",
+     *          "key": "area",
+     *          "additional_data": {
+     *              "name": "Ordinateur Portable",
+     *              "code": "MC-3759",
+     *              "value_code": "area-hccid-30-3"
+     *          }
+     *      }],
      *      "price": 100,
      *      "image": "http://www.rueducommerce.fr/mon_image.jpg",
      *      "merchant_id": 178,
      *      "merchant_name": "Rue du commerce",
      *      "brand_id": 493,
      *      "brand_name": "Corsair",
+     *      "description": "item descr",
      *      "attributes": {
      *        "field1": "value1",
      *        "field2": "value2"
