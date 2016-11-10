@@ -5,6 +5,7 @@ namespace Rdc\Cart\CartBusinessBundle\Vo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use JMS\Serializer\SerializerBuilder;
+use Rdc\Mid\RdcMidBundle\Vo\AbstractVo;
 
 /**
  * Address
