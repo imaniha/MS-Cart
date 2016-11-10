@@ -9,7 +9,7 @@ Rdc\Cart\CartBusinessBundle\Entity\Cart:
         payment:
             - Valid: ~
         items:
-            - Valid: ~
+            - Valid: { traverse: true }
         behaviors:
             - Valid: { traverse: true }
     properties:

@@ -1,0 +1,10 @@
+Rdc\Cart\CartBusinessBundle\Vo\Category:
+    properties:
+        value:
+            - NotBlank: ~
+            - Type:
+                type: string
+        key:
+            - NotBlank: ~
+            - Type:
+                type: string
