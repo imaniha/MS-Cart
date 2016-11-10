@@ -1986,7 +1986,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.rueducommerce.fr/rdc-dev/RdcMidBundle.git",
-                "reference": "409d2e4092f2ddc8716642a740fe80e11db87038"
+                "reference": "650b441647458b7214cae8568c620025f9437bca"
             },
             "require": {
                 "csa/guzzle-bundle": "^2.1",
@@ -2013,7 +2013,7 @@
                 "MIT"
             ],
             "description": "The common bundle",
-            "time": "2016-11-03 15:17:28"
+            "time": "2016-11-10 09:38:47"
         },
         {
             "name": "sensio/distribution-bundle",
