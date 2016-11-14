@@ -108,8 +108,10 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->getContext();
-        $this->logJsonRequest($logger, $request, 'cart_creation');
+        $logger->getContext()->addData( [
+            LogContext::TYPE => 'cart_creation',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('Cart creation initialization');
 
         try {
@@ -213,7 +215,11 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'add_customer');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            LogContext::TYPE => 'cart_add_address'
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('Add customer initialization');
 
         try {
@@ -319,7 +325,12 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'add_item');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => ($cart->getCustomer()?$cart->getCustomer()->getCustomerId():null),
+            LogContext::TYPE => 'cart_add_item',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('Add item initialization');
 
         try {
@@ -425,7 +436,12 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'update_item');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => ($cart->getCustomer()?$cart->getCustomer()->getCustomerId():null),
+            LogContext::TYPE => 'cart_update_item',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('update item initialization');
 
         try {
@@ -542,7 +558,12 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'add_address');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_address',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('add address initialization');
 
         try {
@@ -613,7 +634,12 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'add_payment');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_address',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('add payment initialization');
 
         try {
@@ -689,7 +715,12 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
-        $this->logJsonRequest($logger, $request, 'add_delivery_method');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_delivery_method',
+        ] );
+        $this->logJsonRequest($logger, $request);
         $logger->logInfo('add delivery method initialization');
 
         try {
@@ -800,7 +831,12 @@ class CartApiController extends FOSRestController
             $this->validateForm($form);
 
             $logger = $this->get('application_logger');
-            $this->logJsonRequest($logger, $request, 'add_promotion');
+            $logger->getContext()->addData( [
+                'cart_id' => $cart->getCartId(),
+                'customer_id' => $cart->getCustomer()->getCustomerId(),
+                LogContext::TYPE => 'cart_add_promotion',
+            ] );
+            $this->logJsonRequest($logger, $request);
             $logger->logInfo('add promotion initialization');
 
             $cart = $this->getCartBusiness()->createCart($cart);
@@ -944,6 +980,6 @@ class CartApiController extends FOSRestController
         {
             $params = json_decode($content, true);
         }
-        $logger->logInfo( $params );
+        $logger->logInfo('Json Request:', $params );
     }
 }
