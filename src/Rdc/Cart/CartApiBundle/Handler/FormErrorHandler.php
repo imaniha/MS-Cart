@@ -24,8 +24,6 @@ class FormErrorHandler extends JMSFormErrorHandler
     {
         $form = $errors = [];
         $global = '';
-        $form['success'] = false;
-        $form['code'] = 400;
         $form['errors'] = [];
 
         $this->getErrors($data, $errors, $global);

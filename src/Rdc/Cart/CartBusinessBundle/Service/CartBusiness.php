@@ -2,6 +2,7 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Service;
 
+use Rdc\Mid\RdcMidBundle\Service\Logger\ApplicationLogger;
 use Rdc\Cart\CartBusinessBundle\Service\AddressBusiness;
 use Rdc\Cart\CartBusinessBundle\Service\CustomerBusiness;
 use JMS\Serializer\Serializer;
@@ -15,11 +16,13 @@ class CartBusiness
     protected $customerBusiness;
 
     public function __construct(
+        ApplicationLogger $logger,
         EntityManager $entityManager,
         Serializer $serializer,
         AddressBusiness $addressBusiness,
         CustomerBusiness $customerBusiness
     ) {
+        $this->logger = $logger;
         $this->em = $entityManager;
         $this->serializer = $serializer;
         $this->addressBusiness = $addressBusiness;
@@ -39,7 +42,9 @@ class CartBusiness
     {
 
         if ('2' !== $cart->getStatus()) {
-            throw new \LogicException('Cart should be locked to be notified');
+            $exception = new \LogicException('Cart should be locked to be notified');
+            $this->logger->logException('Failed to create cart', $exception);
+            throw $exception;
         }
 
         $cart->setNotified(true);
@@ -54,7 +59,10 @@ class CartBusiness
         $cart = $this->em->getRepository('CartBusinessBundle:Cart')->findOneBy(['cart_id' => $cartId]);
 
         if (!$cart instanceof Cart) {
-            throw new NotFoundHttpException('Cart not found');
+            $exception = NotFoundHttpException('Cart not found');
+            $this->logger->logException('Failed to create cart', $exception);
+
+            throw $exception;
         }
 
         return $cart;

@@ -71,6 +71,13 @@ swiftmailer:
 
 nelmio_api_doc: ~
 
+monolog:
+    handlers:
+        file_handler:
+            type: service
+            id: application_log_filehandler
+            channels: ['Business']
+
 fos_rest:
     param_fetcher_listener: true
     routing_loader:
