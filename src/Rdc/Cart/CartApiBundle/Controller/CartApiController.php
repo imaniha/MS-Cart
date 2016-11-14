@@ -108,6 +108,7 @@ class CartApiController extends FOSRestController
         $form->handleRequest($request);
 
         $logger = $this->get('application_logger');
+        $this->getContext();
         $this->logJsonRequest($logger, $request, 'cart_creation');
         $logger->logInfo('Cart creation initialization');
 
@@ -933,10 +934,9 @@ class CartApiController extends FOSRestController
      *
      * @param    \Rdc\Mid\RdcMidBundle\Service\Logger\ApplicationLogger $logger
      * @param    \Symfony\Component\HttpFoundation\Request  $request
-     * @param    string $type Log context type
      *
      */
-    protected function logJsonRequest($logger, $request, $type)
+    protected function logJsonRequest($logger, $request)
     {
         $params = array();
         $content = $request->getContent();
@@ -944,6 +944,6 @@ class CartApiController extends FOSRestController
         {
             $params = json_decode($content, true);
         }
-        $logger->getContext()->addData( array_merge( $params, [ LogContext::TYPE => $type] ) );
+        $logger->logInfo( $params );
     }
 }
