@@ -2,12 +2,14 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Service;
 
+use Rdc\Mid\RdcMidBundle\Service\Logger\ApplicationLogger;
 use Rdc\Cart\CartBusinessBundle\Service\AddressBusiness;
 use Rdc\Cart\CartBusinessBundle\Service\CustomerBusiness;
 use JMS\Serializer\Serializer;
 use Doctrine\ORM\EntityManager;
 use Rdc\Cart\CartBusinessBundle\Entity\Cart;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Rdc\Cart\CartBusinessBundle\Exception\CartException;
+
 
 class CartBusiness
 {
@@ -15,11 +17,13 @@ class CartBusiness
     protected $customerBusiness;
 
     public function __construct(
+        ApplicationLogger $logger,
         EntityManager $entityManager,
         Serializer $serializer,
         AddressBusiness $addressBusiness,
         CustomerBusiness $customerBusiness
     ) {
+        $this->logger = $logger;
         $this->em = $entityManager;
         $this->serializer = $serializer;
         $this->addressBusiness = $addressBusiness;
@@ -39,23 +43,14 @@ class CartBusiness
     {
 
         if ('2' !== $cart->getStatus()) {
-            throw new \LogicException('Cart should be locked to be notified');
+            $exception = new CartException(CartException::CART_NOT_LOCKED, ['cart_id'=>$cart->getCartId()] );
+            $this->logger->logException('Failed to create cart', $exception);
+            throw $exception;
         }
 
         $cart->setNotified(true);
         $this->em->persist($cart);
         $this->em->flush();
-
-        return $cart;
-    }
-
-    public function getCart($cartId = null)
-    {
-        $cart = $this->em->getRepository('CartBusinessBundle:Cart')->findOneBy(['cart_id' => $cartId]);
-
-        if (!$cart instanceof Cart) {
-            throw new NotFoundHttpException('Cart not found');
-        }
 
         return $cart;
     }
@@ -66,49 +61,9 @@ class CartBusiness
         return $this->em->getRepository('CartBusinessBundle:Cart')->findBy(['status'=>2, 'notified'=>false]);
     }
 
-    public function addItem($cartId, $item, $extra)
-    {
-        $cart = $this->getCart($cartId);
-        $item = $this->serializer->toArray($item);
-        $items = $cart->getItems();
-        $items[$item['item_id']] = array_merge($item, $extra);
-
-        $cart->setItems($items);
-        $this->em->persist($cart);
-        $this->em->flush();
-
-        return $cart;
-    }
-
-
-    public function deleteItem($cartId, $item_id)
-    {
-        $cart = $this->getCart($cartId);
-        $items = $cart->getItems();
-        if (isset($items[$item_id])) {
-            unset($items[$item_id]);
-            $cart->setItems($items);
-            $this->em->persist($cart);
-            $this->em->flush();
-        }
-
-        return $cart;
-    }
-
     public function getCartSummary($cartId)
     {
         // TODO implement method
-    }
-
-    public function addPromotion($cartId, $promotion)
-    {
-        $cart = $this->getCart($cartId);
-        $cart->setPromotion($promotion);
-
-        $this->em->persist($cart);
-        $this->em->flush();
-
-        return $cart;
     }
 
     public function addDeliveryMethod($cartId)

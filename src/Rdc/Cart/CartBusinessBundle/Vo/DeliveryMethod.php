@@ -3,6 +3,7 @@
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Rdc\Mid\RdcMidBundle\Vo\AbstractVo;
 
 /**
  * Shipping

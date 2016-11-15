@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new Rdc\Cart\CartApiBundle\CartApiBundle(),
             new Rdc\Cart\CartBusinessBundle\CartBusinessBundle(),
+            new Rdc\Mid\RdcMidBundle\RdcMidBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

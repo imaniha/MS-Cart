@@ -2,9 +2,10 @@
 
 namespace Rdc\Cart\CartBusinessBundle\Vo;
 
-use Rdc\Cart\CartBusinessBundle\Vo\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Rdc\Cart\CartBusinessBundle\Vo\Category;
+use Rdc\Mid\RdcMidBundle\Vo\AbstractVo;
 
 /**
  * Item

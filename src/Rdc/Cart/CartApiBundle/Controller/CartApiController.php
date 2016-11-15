@@ -24,9 +24,14 @@ use Rdc\Cart\CartApiBundle\Form\CartItemsType;
 use Rdc\Cart\CartApiBundle\Form\DeliveryMethodType;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Version;
-use Rdc\Cart\CartApiBundle\Exception\FormValidationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Rdc\Mid\RdcMidBundle\Response\SuccessResponse;
+use Rdc\Mid\RdcMidBundle\Response\FailureResponse;
+use Rdc\Mid\RdcMidBundle\Exception\DefaultException;
+use Rdc\Mid\RdcMidBundle\Exception\ExposableExceptionInterface;
+use Rdc\Mid\RdcMidBundle\Exception\FormValidationException;
+use Rdc\Mid\RdcMidBundle\Service\Logger\LogContext;
 
 /**
  * Class CartApiController
@@ -102,16 +107,21 @@ class CartApiController extends FOSRestController
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
 
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            LogContext::TYPE => 'cart_creation',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('Cart creation initialization');
+
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to create cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -202,19 +212,25 @@ class CartApiController extends FOSRestController
     public function addCustomerAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartCustomerType::class, $cart);
-
         $form->handleRequest($request);
+
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            LogContext::TYPE => 'cart_add_address'
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('Add customer initialization');
 
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Customer added to cart');
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add customer to cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -305,20 +321,27 @@ class CartApiController extends FOSRestController
      */
     public function addItemAction(Request $request, Cart $cart)
     {
-
         $form = $this->createForm(CartItemsType::class, $cart);
         $form->handleRequest($request);
+
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => ($cart->getCustomer()?$cart->getCustomer()->getCustomerId():null),
+            LogContext::TYPE => 'cart_add_item',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('Add item initialization');
 
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Item added');
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add item cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -412,16 +435,24 @@ class CartApiController extends FOSRestController
         $form = $this->createForm(CartItemsType::class, $cart, ['method'=>$request->getMethod()]);
         $form->handleRequest($request);
 
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => ($cart->getCustomer()?$cart->getCustomer()->getCustomerId():null),
+            LogContext::TYPE => 'cart_update_item',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('update item initialization');
+
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Item updated');
             $view = $this->view($cart, 201);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to update cart item', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -524,19 +555,26 @@ class CartApiController extends FOSRestController
     public function addAddressAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartAddressType::class, $cart);
-
         $form->handleRequest($request);
+
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_address',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('add address initialization');
 
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('address added');
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add address to cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -593,21 +631,27 @@ class CartApiController extends FOSRestController
     public function addPaymentAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartPaymentType::class, $cart);
-
         $form->handleRequest($request);
+
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_address',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('add payment initialization');
 
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Payment added');
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add payment to cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);;
         }
-
         return $this->handleView($view);
     }
 
@@ -668,19 +712,26 @@ class CartApiController extends FOSRestController
     public function addDeliveryMethodAction(Request $request, Cart $cart)
     {
         $form = $this->createForm(CartDeliveryMethodType::class, $cart);
-
         $form->handleRequest($request);
+
+        $logger = $this->get('application_logger');
+        $logger->getContext()->addData( [
+            'cart_id' => $cart->getCartId(),
+            'customer_id' => $cart->getCustomer()->getCustomerId(),
+            LogContext::TYPE => 'cart_add_delivery_method',
+        ] );
+        $this->logJsonRequest($logger, $request);
+        $logger->logInfo('add delivery method initialization');
 
         try {
             $this->validateForm($form);
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Delivery method added');
             $view = $this->view($cart, 200);
 
-        } catch (FormValidationException $exception) {
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add delivery method to cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -779,19 +830,25 @@ class CartApiController extends FOSRestController
 
             $this->validateForm($form);
 
+            $logger = $this->get('application_logger');
+            $logger->getContext()->addData( [
+                'cart_id' => $cart->getCartId(),
+                'customer_id' => $cart->getCustomer()->getCustomerId(),
+                LogContext::TYPE => 'cart_add_promotion',
+            ] );
+            $this->logJsonRequest($logger, $request);
+            $logger->logInfo('add promotion initialization');
+
             $cart = $this->getCartBusiness()->createCart($cart);
+            $logger->logInfo('Promotion added');
             $view = $this->view($cart, 200);
 
             $this->getDoctrine()->getManager()->persist($cart);
             $this->getDoctrine()->getManager()->flush();
 
-        } catch (FormValidationException $exception) {
-
-            $form = $this->convertFormToArray($form);
-            $view = $this->view($form, 400);
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to add promotion to cart', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -826,12 +883,14 @@ class CartApiController extends FOSRestController
     public function getUnnotifiedOrderListAction(Request $request)
     {
         try {
+            $logger = $this->get('application_logger');
+            $logger->logInfo('get unnotified orders initialization');
             $orders = $this->getCartBusiness()->getUnnotifiedOrders();
             $view = $this->view($orders, 200);
 
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to get unnotified orders', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -858,12 +917,15 @@ class CartApiController extends FOSRestController
     public function putOrderNotifiedAction(Request $request, Cart $cart)
     {
         try {
+            $logger = $this->get('application_logger');
+            $logger->logInfo('notified order initialization');
+
             $this->getCartBusiness()->notify($cart);
             $view = $this->view(['success' => true], 200);
 
         } catch (\Exception $exception) {
-            $data = ['success' => false, 'message' => $exception->getMessage()];
-            $view = $this->view($data, 400);
+            $logger->logException('Failed to notified order', $exception);
+            $view = $this->view( new FailureResponse($exception), 406);
         }
 
         return $this->handleView($view);
@@ -879,23 +941,45 @@ class CartApiController extends FOSRestController
 
     /**
      * @param \Symfony\Component\Form\AbstractType Form to be validated
-     * @throws \Rdc\Cart\CartApiBundle\Exception\FormValidationException if the form is invalid
+     * @throws \Rdc\Mid\RdcMidBundle\Exception\FormValidationException if the form is invalid
      */
     protected function validateForm($form)
     {
+        $serializer = $this->get('serializer');
+
         if (!$form->isValid()) {
-            throw new FormValidationException();
+            $formValidationException = new FormValidationException(FormValidationException::INVALID_FORM);
+            $forms_error = json_decode($serializer->serialize($form, 'json'), true);
+            $formValidationException->setErrors( isset($forms_error['errors'])?$forms_error['errors']:[] );
+            throw $formValidationException;
         }
     }
 
     /**
      *
-     * @param    string  repository name
+     * @param    string  $repository name of the repository
      * @return   \Doctrine\ORM\EntityRepository
      *
      */
     protected function getRepository($repository)
     {
         return $this->getDoctrine()->getRepository($repository);
+    }
+
+    /**
+     *
+     * @param    \Rdc\Mid\RdcMidBundle\Service\Logger\ApplicationLogger $logger
+     * @param    \Symfony\Component\HttpFoundation\Request  $request
+     *
+     */
+    protected function logJsonRequest($logger, $request)
+    {
+        $params = array();
+        $content = $request->getContent();
+        if (!empty($content))
+        {
+            $params = json_decode($content, true);
+        }
+        $logger->logInfo('Json Request:', $params );
     }
 }

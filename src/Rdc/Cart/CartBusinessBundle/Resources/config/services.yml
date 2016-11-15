@@ -1,7 +1,12 @@
 services:
     cart.business:
         class: Rdc\Cart\CartBusinessBundle\Service\CartBusiness
-        arguments: ['@doctrine.orm.entity_manager', '@serializer', '@address.business', '@customer.business']
+        arguments:
+          - '@application_logger'
+          - '@doctrine.orm.entity_manager'
+          - '@serializer'
+          - '@address.business'
+          - '@customer.business'
 
     customer.business:
         class: Rdc\Cart\CartBusinessBundle\Service\CustomerBusiness
@@ -14,8 +19,8 @@ services:
 
     cart.behavior.listener:
         class: Rdc\Cart\CartBusinessBundle\Service\Behavior\EventListener\BehaviorValidator
-        arguments: ['@validator', '@behavior.validator.factory']
+        arguments:
+          - '@validator'
+          - '@behavior.validator.factory'
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
-
-
