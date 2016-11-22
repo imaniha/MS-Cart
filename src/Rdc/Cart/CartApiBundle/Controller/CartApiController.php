@@ -74,7 +74,6 @@ class CartApiController extends FOSRestController
      *
      *  input={
      *       "class"="Rdc\Cart\CartBusinessBundle\Entity\Cart",
-     *       "groups"={"nelmio"},
      *       "parsers"={
      *         "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *       }
@@ -980,6 +979,7 @@ class CartApiController extends FOSRestController
         {
             $params = json_decode($content, true);
         }
-        $logger->logInfo('Json Request:', $params );
+        if($params)
+            $logger->logInfo('Json Request:', $params );
     }
 }
